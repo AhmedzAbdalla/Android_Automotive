@@ -128,6 +128,10 @@ int main() {
     arr.setValue(1, doublePtr, DOUBLE);
     arr.setValue(2, charPtr, CHAR);
 
+    arr.getDataType(0);
+    arr.getDataType(1);
+    arr.getDataType(2);
+
     // Print the array
     arr.printArray();
 
