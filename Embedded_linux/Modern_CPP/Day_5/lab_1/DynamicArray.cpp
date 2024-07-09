@@ -42,72 +42,91 @@ DynamicArray::~DynamicArray()
 }
 
 // Resize the array to double the size
-void DynamicArray::resize()
+ret_status DynamicArray::resize()
 {
     capacity *= 2;
     int *newArray = new int[capacity];
+    if (!newArray)
+    {
+        return NOK; // Allocation failed
+    }
     std::copy(array, array + currentSize, newArray);
     delete[] array;
     array = newArray;
+    return OK;
 }
 
 // Add the value to the end of the array
-void DynamicArray::pushback(int value)
+ret_status DynamicArray::pushback(int value)
 {
     if (currentSize == capacity)
     {
-        resize();
+        if (resize() == NOK)
+        {
+            return NOK; // Resize failed
+        }
     }
     array[currentSize++] = value;
+    return OK;
 }
 
 // Remove the last element from the array
-void DynamicArray::popback()
+ret_status DynamicArray::popback()
 {
     if (currentSize > 0)
     {
         currentSize--;
+        return OK;
     }
+    return NOK; // No elements to remove
 }
 
 // Remove the element at the given index
-void DynamicArray::removeAt(int index)
+ret_status DynamicArray::removeAt(int index)
 {
     if (index >= 0 && index < currentSize)
     {
         std::copy(array + index + 1, array + currentSize, array + index);
         currentSize--;
+        return OK;
     }
+    return NOK; // Invalid index
 }
 
 // Insert the value at the given index and shift the elements to the right
-void DynamicArray::insertAt(int index, int value)
+ret_status DynamicArray::insertAt(int index, int value)
 {
     if (index >= 0 && index <= currentSize)
     {
         if (currentSize == capacity)
         {
-            resize();
+            if (resize() == NOK)
+            {
+                return NOK; // Resize failed
+            }
         }
         std::copy_backward(array + index, array + currentSize, array + currentSize + 1);
         array[index] = value;
         currentSize++;
+        return OK;
     }
+    return NOK; // Invalid index
 }
 
 // Insert the value in the middle of the array
-void DynamicArray::insertMiddle(int value)
+ret_status DynamicArray::insertMiddle(int value)
 {
-    insertAt(currentSize / 2, value);
+    return insertAt(currentSize / 2, value);
 }
 
 // Remove the middle element from the array
-void DynamicArray::removeMiddle()
+ret_status DynamicArray::removeMiddle()
 {
     if (currentSize > 0)
     {
-        removeAt(currentSize / 2);
+        return removeAt(currentSize / 2);
     }
+    return NOK; // No elements to remove
 }
 
 // Return the size of the array
@@ -119,9 +138,4 @@ int DynamicArray::size() const
 // Print the array
 void DynamicArray::print() const
 {
-    for (int i = 0; i < currentSize; ++i)
-    {
-        std::cout << array[i] << " ";
-    }
-    std::cout << std::endl;
-}
+    for (int i =
