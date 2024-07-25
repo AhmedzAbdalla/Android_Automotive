@@ -1,0 +1,7 @@
+arm_64bit=1
+kernel=u-boot.bin
+enable_uart=1
+enable_mmc=1
+device_tree=bcm2837-rpi-3-b-plus.dtb
+dtparam=act_led_trigger=none
+dtparam=act_led_activelow=off
