@@ -1,0 +1,64 @@
+# U-Boot script to check availability of mmc and nic interfaces, and load files if mmc is available
+
+# Define the interfaces
+setenv interfaces "mmc nic"
+
+# Loop over each interface
+for interface in ${interfaces}; do
+    if test "${interface}" = "mmc"; then
+        # Check MMC interface
+        mmc dev 0
+        if test $? -eq 0; then
+            echo "MMC device found"
+            
+            # Load the .dtb file to DRAM address fdt_addr_r
+            fatload mmc 0:1 $fdt_addr_r vexpress-v2p-ca9.dtb
+            if test $? -eq 0; then
+                echo ".dtb file loaded successfully"
+            else
+                echo "Failed to load .dtb file"
+            fi
+            
+            # Load the .img file to DRAM address kernel_addr_r
+            fatload mmc 0:1 $kernel_addr_r zImage
+            if test $? -eq 0; then
+                echo ".img file loaded successfully"
+            else
+                echo "Failed to load .img file"
+            fi
+            
+            exit
+        else
+            echo "MMC device not found"
+        fi
+    elif test "${interface}" = "nic"; then
+        # Check NIC interface
+
+        setenv serverip 192.168.1.44
+
+        ping $serverip
+
+        if test $? -eq 0; then
+
+            tftp $fdt_addr_r vexpress-v2p-ca9.dtb
+            if test $? -eq 0; then
+                echo ".dtb file loaded successfully"
+            else
+                echo "Failed to load .dtb file"
+            fi
+
+            tftp $kernel_addr_r zImage
+            if test $? -eq 0; then
+                echo ".img file loaded successfully"
+            else
+                echo "Failed to load .img file"
+            fi
+            
+            exit
+        else
+            echo "NIC device not found"
+        fi
+    else
+        echo "Unknown interface: ${interface}"
+    fi
+done
