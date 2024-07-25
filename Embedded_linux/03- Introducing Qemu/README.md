@@ -30,8 +30,8 @@ sudo losetup -f --show --partscan sd.img
 sudo mount /dev/loop18p1 sdcard/boot
 sudo mount /dev/loop18p2 sdcard/rootfs
 
-sudo umount /home/nahass/source/sdcard/boot
-sudo umount /home/nahass/source/sdcard/rootfs
+sudo umount /home/ahmed/source/sdcard/boot
+sudo umount /home/ahmed/source/sdcard/rootfs
 
  
 sudo losetup -d /dev/loopXX # -d deattached
