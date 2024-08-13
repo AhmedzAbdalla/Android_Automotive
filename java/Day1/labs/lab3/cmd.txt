@@ -1,0 +1,3 @@
+javac HelloName.java
+
+java HelloName Ahmed_Abdalla

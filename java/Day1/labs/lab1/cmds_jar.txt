@@ -1,0 +1,3 @@
+jar cef HelloWorld app.jar HelloWorld.class
+
+java -jar app.jar
