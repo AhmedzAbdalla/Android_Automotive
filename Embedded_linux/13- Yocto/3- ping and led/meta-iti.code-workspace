@@ -1,0 +1,24 @@
+{
+	"folders": [
+		{
+			"path": "../../../../meta-iti"
+		},
+		{
+			"path": "../../../../poky"
+		}
+	],
+	"settings": {
+		"python.autoComplete.extraPaths": [
+			"${workspaceFolder}/sources/poky/bitbake/lib",
+			"${workspaceFolder}/sources/poky/meta/lib"
+		],
+		"python.analysis.extraPaths": [
+			"${workspaceFolder}/sources/poky/bitbake/lib",
+			"${workspaceFolder}/sources/poky/meta/lib"
+		],
+		"files.associations": {
+			"*.conf": "bitbake",
+			"*.inc": "bitbake"
+		}
+	}
+}
