@@ -2,7 +2,8 @@ import java.util.*;
 
 class IpCutter {
     public static void main(String args[]) {
-        String Ip = "192.168.12.30";
+        String Ip = " ";
+        Ip = args[0];
 
        
         int startIndex = 0;
@@ -15,9 +16,11 @@ class IpCutter {
             startIndex = dotIndex + 1;
             dotIndex = Ip.indexOf(".", startIndex);
         }
-        
+       
         // Print the last part after the last dot
         System.out.println(Ip.substring(startIndex));
+        
+        //=======================================================
 
         System.out.println("Parsing IP using split() ");
 
@@ -25,6 +28,9 @@ class IpCutter {
 
         for (String iterator : PaesedIp)
             System.out.println(iterator);
+        
+        
+        //==========================================================
 
         System.out.println("Parsing IP using StringTokenizer");
         StringTokenizer str = new StringTokenizer(Ip,".");
