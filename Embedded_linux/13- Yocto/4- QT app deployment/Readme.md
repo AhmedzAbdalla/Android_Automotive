@@ -40,3 +40,12 @@
         └── linux-yocto-custom.bb
 
 ```
+
+### Run th QT app
+- you will find the application at /use/bin/ with name "rbpiqt"
+
+## Problems regarding rust compiler
+```
+sudo apt install g++-14
+sudo apt install g++-12
+```
