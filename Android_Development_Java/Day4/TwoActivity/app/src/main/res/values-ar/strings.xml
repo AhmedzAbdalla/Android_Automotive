@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">TwoActivity</string>
+    <string name="next">التالي</string>
+    <string name="close">اغلاق</string>
+    <string name="message">المحتوي</string>
+    <string name="phone">الهاتف</string>
+    <string name="back">الرجوع</string>
+</resources>
