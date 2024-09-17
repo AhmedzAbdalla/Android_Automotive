@@ -6,6 +6,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,12 +17,16 @@ public class DynamicFragment extends Fragment {
 
     //private String counter = "0";  // Keep track of the counter
     private String counter = "0";
+    private String temp = "0";
     TextView CounterValue;
-
+    private static final String TAG = "DynamicFragment";
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+
+
 
     }
 
@@ -37,25 +42,37 @@ public class DynamicFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         CounterValue = view.findViewById(R.id.editCounter);
 
+        //CounterValue.setText(savedInstanceState.getString("counter"));
         // Restore the counter value if savedInstanceState is not null
         if (savedInstanceState != null) {
-            counter = savedInstanceState.getString("counter", "0");
+
+            temp = savedInstanceState.getString("counterval");
         }
         if (CounterValue != null) {
-            CounterValue.setText(counter);
+            CounterValue.setText(temp);
         }
     }
-    void modifyCounter(String Str)
+    void changeData(String Str)
     {
         if (CounterValue != null) {
             CounterValue.setText(Str);
         }
     }
 
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+
+        String temp = CounterValue.getText().toString();
+        outState.putString("counterval", temp);
+
+    }
 
 }
 
 interface communicator
 {
-    public void changeData(String Str);
+    public void respond(String Str);
 }
+
+
+
