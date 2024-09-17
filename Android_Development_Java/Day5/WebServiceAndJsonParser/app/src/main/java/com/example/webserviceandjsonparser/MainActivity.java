@@ -14,6 +14,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -50,6 +51,7 @@ public class MainActivity extends AppCompatActivity {
     Button btnPrev;
     Button btnNext;
     ImageView img;
+    RatingBar ratingBar;
     //img = findViewById(R.id.imageView);
 
     Handler handler = new Handler(Looper.getMainLooper());
@@ -70,6 +72,9 @@ public class MainActivity extends AppCompatActivity {
         btnPrev = findViewById(R.id.btnPrev);
         btnNext = findViewById(R.id.btnNext);
         img = findViewById(R.id.imageView);
+        ratingBar = findViewById(R.id.ratingBar);
+        ratingBar.setEnabled(false);
+
 
 
         Handler handler_title = new Handler(Looper.getMainLooper())
@@ -84,6 +89,11 @@ public class MainActivity extends AppCompatActivity {
                     editBrand.setText( testobj.getString("brand"));
                     editDescription.setText( testobj.getString("description"));
                     String url = testobj.getString("thumbnail").toString();
+                    double ratingString = testobj.getDouble("rating");
+                    float rating = (float) (ratingString /2);
+                    Log.e(TAG, "MalformedURLException: " + rating);
+                    ratingBar.setRating(rating);
+                    //ratingBar.setRating(Float.parseFloat(String.valueOf(testobj.getString("rating")) + "f"));
                     Download myDownload = new Download();
                     myDownload.execute(url);
                 } catch (JSONException e) {
@@ -104,6 +114,11 @@ public class MainActivity extends AppCompatActivity {
                     editBrand.setText( testobj.getString("brand"));
                     editDescription.setText( testobj.getString("description"));
                     String url = testobj.getString("thumbnail").toString();
+                    double ratingString = testobj.getDouble("rating");
+                    float rating = (float) (ratingString /2);
+                    Log.e(TAG, "MalformedURLException: " + rating);
+                    ratingBar.setRating(rating);
+
                     Download myDownload = new Download();
                     myDownload.execute(url);
                 } catch (JSONException e) {
