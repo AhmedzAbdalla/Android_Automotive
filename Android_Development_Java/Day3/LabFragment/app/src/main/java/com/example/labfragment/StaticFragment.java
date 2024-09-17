@@ -1,11 +1,14 @@
 package com.example.labfragment;
 
+import static androidx.fragment.app.FragmentManager.TAG;
+
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,9 +17,11 @@ import android.widget.Button;
 public class StaticFragment extends Fragment {
 
     public int counter = 0;
+    public String mystrcounter ;
     Button btncount;
     communicator comm;
 
+    private static final String TAG = "StaticFragment";
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -24,7 +29,12 @@ public class StaticFragment extends Fragment {
 
         if (savedInstanceState != null) {
             // Restore the counter value after a rotation
-            counter = savedInstanceState.getInt("counter", 0);
+
+            mystrcounter= savedInstanceState.getString("counter");
+            counter = Integer.valueOf(mystrcounter);
+            //strcounter = savedInstanceState.getString("counter");
+            Log.d(TAG, "onCreat||counter"+ mystrcounter);
+            Log.d(TAG, "onCreat%%counter"+ counter);
         }
 
     }
@@ -48,10 +58,20 @@ public class StaticFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 counter++;
-
-                comm.changeData(String.valueOf(counter));
+                Log.d(TAG, "onViewCreated counter"+ counter);
+                comm.respond(String.valueOf(counter));
             }
         });
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+         outState.putString("counter", String.valueOf(counter));
+        outState.putString("counter", String.valueOf(counter));
+
+        String strcounter = outState.getString("counter");
+        Log.d(TAG, "onSaveInstanceState counter>> "+ strcounter);
     }
 
 }

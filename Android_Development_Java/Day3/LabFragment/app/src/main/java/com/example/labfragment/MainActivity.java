@@ -42,7 +42,7 @@ public class MainActivity extends AppCompatActivity implements communicator{
             Fragment myfragment= fmgr.findFragmentById(R.id.fragmentContainerView2);
             if(myfragment instanceof DynamicFragment)
             {
-                ((DynamicFragment) myfragment).modifyCounter(savedCounterValue);
+                ((DynamicFragment) myfragment).changeData(savedCounterValue);
             }
         }
 
@@ -68,13 +68,13 @@ public class MainActivity extends AppCompatActivity implements communicator{
         }
     }
 
-    public void changeData(String Str)
+    public void respond(String Str)
     {
         fmgr = getSupportFragmentManager();
         Fragment myfragment= fmgr.findFragmentById(R.id.fragmentContainerView2);
         if(myfragment instanceof DynamicFragment)
         {
-            ((DynamicFragment) myfragment).modifyCounter(Str);
+            ((DynamicFragment) myfragment).changeData(Str);
         }
 
     }
