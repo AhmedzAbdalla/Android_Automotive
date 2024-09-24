@@ -10,6 +10,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.foodplanner.SearchForMeals.Viewer.AdapterOfSearchFragment;
+
 public class Fragment_home extends Fragment {
 
 
@@ -24,9 +26,9 @@ public class Fragment_home extends Fragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
         // Set Adapter
-        String[] data = {"Item 1", "Item 2", "Item 3", "Item 4"};
-        RecyclerViewAdapter adapter = new RecyclerViewAdapter(data);
-        recyclerView.setAdapter(adapter);
+        //String[] data = {"Item 1", "Item 2", "Item 3", "Item 4"};
+        //AdapterOfSearchFragment adapter = new AdapterOfSearchFragment(data);
+        //recyclerView.setAdapter(adapter);
 
         return view;
     }

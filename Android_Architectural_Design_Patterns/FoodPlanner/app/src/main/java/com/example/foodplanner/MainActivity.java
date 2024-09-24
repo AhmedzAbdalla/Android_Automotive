@@ -9,19 +9,17 @@ import android.widget.TextView;
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 import androidx.fragment.app.Fragment;
 
 import com.example.foodplanner.Network.MealsRemoteDataSourceImpl;
 import com.example.foodplanner.Network.NetworkCallback;
+import com.example.foodplanner.SearchForMeals.Viewer.Fragment_Search;
 import com.example.foodplanner.model.POJO_class;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity implements NetworkCallback {
+public class MainActivity extends AppCompatActivity {
     TextView CurrentFragmentName;
     BottomNavigationView bottomNavigationView;
      int yemp1,temp2;
@@ -38,9 +36,9 @@ public class MainActivity extends AppCompatActivity implements NetworkCallback {
 
         //bottomNavigationView = findViewById(R.id.bottom_navigation);
 
-        MealsRemoteDataSourceImpl temp = MealsRemoteDataSourceImpl.getInstance(this);
+        //MealsRemoteDataSourceImpl temp = MealsRemoteDataSourceImpl.getInstance(this);
 
-        temp.searchForMeal(this , "Arrabiata");
+        //temp.searchForMeal(this , "Arrabiata");
         // Load default fragment
         if (savedInstanceState == null) {
             CurrentFragmentName.setText("Home");
@@ -80,13 +78,4 @@ public class MainActivity extends AppCompatActivity implements NetworkCallback {
 
     }
 
-    @Override
-    public void onSuccessResult(List<POJO_class> myproducts) {
-
-    }
-
-    @Override
-    public void onFailureResult(String ErrorMsg) {
-
-    }
 }

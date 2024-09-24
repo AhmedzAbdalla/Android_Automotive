@@ -1,5 +1,7 @@
 package com.example.foodplanner.model;
 
+import android.util.Log;
+
 import androidx.lifecycle.LiveData;
 
 import com.example.foodplanner.DB.MealsLocalDataSourceImpl;
@@ -8,10 +10,10 @@ import com.example.foodplanner.Network.MealsRemoteDataSourceImpl;
 
 import java.util.List;
 
-public class MealsRepositoryImpl implements MealsRepository {
+public class MealsRepositoryImpl implements  MealsRepository {
 
-    MealsRemoteDataSourceImpl myProductsRemoteDataSourceImpl;
-   MealsLocalDataSourceImpl myProductsLocalDataSourceImpl;
+    MealsRemoteDataSourceImpl myMealssRemoteDataSourceImpl;
+   MealsLocalDataSourceImpl myMealsLocalDataSourceImpl;
 
    private static MealsRepositoryImpl myrepo = null;
 
@@ -25,27 +27,43 @@ public class MealsRepositoryImpl implements MealsRepository {
 
    private MealsRepositoryImpl(MealsRemoteDataSourceImpl Remote_Src, MealsLocalDataSourceImpl Local_Src)
    {
-       this.myProductsLocalDataSourceImpl = Local_Src;
-       this.myProductsRemoteDataSourceImpl = Remote_Src;
+       this.myMealsLocalDataSourceImpl = Local_Src;
+       this.myMealssRemoteDataSourceImpl = Remote_Src;
    }
 
     @Override
     public LiveData<List<POJO_class>> getStoredProducts() {
-        return myProductsLocalDataSourceImpl.getStoredData();
+        return myMealsLocalDataSourceImpl.getStoredData();
     }
 
     @Override
     public void getAllProducts(NetworkCallback L_NetworkCallback) {
-        myProductsRemoteDataSourceImpl.fetchAndStoreProducts(L_NetworkCallback);
+        myMealssRemoteDataSourceImpl.fetchAndStoreProducts(L_NetworkCallback);
+    }
+
+    @Override
+    public void searchMealbyIngredient(NetworkCallback L_NetworkCallback, String prompt) {
+        myMealssRemoteDataSourceImpl.searchForMealbyIngredient(L_NetworkCallback, prompt);
+    }
+
+    @Override
+    public void searchMealbyCountry(NetworkCallback L_NetworkCallback, String prompt) {
+        myMealssRemoteDataSourceImpl.searchForMealbyCountry(L_NetworkCallback , prompt);
+    }
+
+    @Override
+    public void searchMealbyCategory(NetworkCallback L_NetworkCallback, String prompt) {
+        myMealssRemoteDataSourceImpl.searchForMealbyCategory(L_NetworkCallback , prompt);
     }
 
     @Override
     public void insertProduct(POJO_class L_POPojoClass) {
-        myProductsLocalDataSourceImpl.insert(L_POPojoClass);
+        myMealsLocalDataSourceImpl.insert(L_POPojoClass);
     }
 
     @Override
     public void deleteProduct(POJO_class L_POPojoClass) {
-        myProductsLocalDataSourceImpl.delete(L_POPojoClass);
+        myMealsLocalDataSourceImpl.delete(L_POPojoClass);
     }
+
 }

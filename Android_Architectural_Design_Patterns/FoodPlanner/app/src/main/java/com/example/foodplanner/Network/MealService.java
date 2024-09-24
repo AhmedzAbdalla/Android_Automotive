@@ -15,6 +15,12 @@ public interface MealService {
     @GET("products")
     Call<MealsResponse> getProducts();
 
-    @POST("search.php")
-    Call<MealsResponse> searchMeal(@Query("s") String mealName);
+    @POST("filter.php")
+    Call<MealsResponse> searchMealbyIngredient(@Query("i") String mealName);//search by Ingredient
+
+    @POST("filter.php")
+    Call<MealsResponse> searchMealbyCountry(@Query("a") String CountryName);//search by Country
+
+    @POST("filter.php")
+    Call<MealsResponse> searchMealbyCategory(@Query("c") String CountryName);//search by Category
 }
