@@ -64,8 +64,8 @@ public class MealsRemoteDataSourceImpl implements MealsRemoteDataSource {
     }
 
 
-    public void searchForMeal(NetworkCallback myNetworkCallback, String mealName) {
-        Call<MealsResponse> call = productsApi.searchMeal(mealName);
+    public void searchForMealbyIngredient(NetworkCallback myNetworkCallback, String mealName) {
+        call = productsApi.searchMealbyIngredient(mealName);
 
         call.enqueue(new retrofit2.Callback<MealsResponse>() {
             @Override
@@ -73,10 +73,15 @@ public class MealsRemoteDataSourceImpl implements MealsRemoteDataSource {
                 if (response.isSuccessful() && response.body() != null) {
                     List<POJO_class> meals = response.body().getMeals();
                     // Handle the meal data here
-                    for (POJO_class meal : meals) {
-                        Log.i("Meal", "Meal Name: " + meal.getStrMeal());
-                        // Do something with the meal data
-                    }
+
+                    myNetworkCallback.onSuccessResult(response.body().getMeals());
+
+                    //for (POJO_class meal : meals) {
+                    //    Log.i("TAG", "ccccccccccccc");
+                    //    Log.i("Meal", "Meal Name: " + meal.getStrMeal());
+                    //    Log.i("Meal", "Meal Name: " + meal.getStrCategory());
+                    //    // Do something with the meal data
+                    //}
                 } else {
                     Log.e("API_ERROR", "Response unsuccessful or body is null");
                 }
@@ -84,6 +89,71 @@ public class MealsRemoteDataSourceImpl implements MealsRemoteDataSource {
 
             @Override
             public void onFailure(Call<MealsResponse> call, Throwable t) {
+                myNetworkCallback.onFailureResult("No Response");
+                Log.e("API_ERROR", "Request failed: " + t.getMessage());
+            }
+        });
+    }
+
+    @Override
+    public void searchForMealbyCountry(NetworkCallback myNetworkCallback, String CountryName) {
+        call = productsApi.searchMealbyCountry(CountryName);
+
+        call.enqueue(new retrofit2.Callback<MealsResponse>() {
+            @Override
+            public void onResponse(Call<MealsResponse> call, retrofit2.Response<MealsResponse> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    List<POJO_class> meals = response.body().getMeals();
+                    // Handle the meal data here
+
+                    myNetworkCallback.onSuccessResult(response.body().getMeals());
+
+                    //for (POJO_class meal : meals) {
+                        Log.i("TAG", "ccccppc");
+                    //    Log.i("Meal", "Meal Name: " + meal.getStrMeal());
+                    //    Log.i("Meal", "Meal Name: " + meal.getStrCategory());
+                    //    // Do something with the meal data
+                    //}
+                } else {
+                    Log.e("API_ERROR", "Response unsuccessful or body is null");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<MealsResponse> call, Throwable t) {
+                myNetworkCallback.onFailureResult("No Response");
+                Log.e("API_ERROR", "Request failed: " + t.getMessage());
+            }
+        });
+    }
+
+    @Override
+    public void searchForMealbyCategory(NetworkCallback myNetworkCallback, String CategoryName) {
+        call = productsApi.searchMealbyCategory(CategoryName);
+
+        call.enqueue(new retrofit2.Callback<MealsResponse>() {
+            @Override
+            public void onResponse(Call<MealsResponse> call, retrofit2.Response<MealsResponse> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    List<POJO_class> meals = response.body().getMeals();
+                    // Handle the meal data here
+
+                    myNetworkCallback.onSuccessResult(response.body().getMeals());
+
+                    //for (POJO_class meal : meals) {
+                    Log.i("TAG", "vgvj");
+                    //    Log.i("Meal", "Meal Name: " + meal.getStrMeal());
+                    //    Log.i("Meal", "Meal Name: " + meal.getStrCategory());
+                    //    // Do something with the meal data
+                    //}
+                } else {
+                    Log.e("API_ERROR", "Response unsuccessful or body is null");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<MealsResponse> call, Throwable t) {
+                myNetworkCallback.onFailureResult("No Response");
                 Log.e("API_ERROR", "Request failed: " + t.getMessage());
             }
         });
