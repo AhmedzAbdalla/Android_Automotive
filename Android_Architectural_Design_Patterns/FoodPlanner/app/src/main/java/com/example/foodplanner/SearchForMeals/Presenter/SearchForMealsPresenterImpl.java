@@ -46,4 +46,5 @@ public class SearchForMealsPresenterImpl implements SearchForMealsPresenter, Net
     public void getProductsbyCategory(String l_category) {
         _repo.searchMealbyCategory(this,l_category);
     }
+
 }

@@ -37,8 +37,8 @@ public class MealsRepositoryImpl implements  MealsRepository {
     }
 
     @Override
-    public void getAllProducts(NetworkCallback L_NetworkCallback) {
-        myMealssRemoteDataSourceImpl.fetchAndStoreProducts(L_NetworkCallback);
+    public void getMealDetails(NetworkCallback L_NetworkCallback, int mealID) {
+        myMealssRemoteDataSourceImpl.fetchMealDetails(L_NetworkCallback, mealID);
     }
 
     @Override

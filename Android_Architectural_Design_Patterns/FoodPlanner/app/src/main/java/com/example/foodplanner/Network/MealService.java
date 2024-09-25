@@ -11,9 +11,10 @@ import retrofit2.http.Query;
 
 // Interface for the Products API
 public interface MealService {
-    // Get all products or apply a limit query if needed
-    @GET("products")
-    Call<MealsResponse> getProducts();
+
+    @POST("lookup.php")
+    Call<MealsResponse> getMealDetails(@Query("i") int mealID);//search by Ingredient
+
 
     @POST("filter.php")
     Call<MealsResponse> searchMealbyIngredient(@Query("i") String mealName);//search by Ingredient
