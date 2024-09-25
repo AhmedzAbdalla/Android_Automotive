@@ -38,8 +38,8 @@ public class MealsRemoteDataSourceImpl implements MealsRemoteDataSource {
     }
 
     // Fetch products from the API
-    public void fetchAndStoreProducts(NetworkCallback myNetworkCallback) {
-        call = productsApi.getProducts();
+    public void fetchMealDetails(NetworkCallback myNetworkCallback, int l_mealID) {
+        call = productsApi.getMealDetails(l_mealID);
         call.enqueue(new Callback<MealsResponse>() {
             @Override
             public void onResponse(Call<MealsResponse> call, Response<MealsResponse> response) {

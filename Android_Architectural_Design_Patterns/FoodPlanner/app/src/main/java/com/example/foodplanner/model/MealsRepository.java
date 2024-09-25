@@ -12,7 +12,7 @@ public interface MealsRepository {
 
     public LiveData<List<POJO_class>> getStoredProducts();
 
-    public void getAllProducts(NetworkCallback L_NetworkCallback);
+    public void getMealDetails(NetworkCallback L_NetworkCallback, int mealID);
 
     public void searchMealbyIngredient(NetworkCallback L_NetworkCallback, String prompt);
 
