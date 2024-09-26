@@ -6,40 +6,48 @@
     android:layout_height="match_parent"
     tools:context=".SearchForMeals.Viewer.Fragment_Search">
 
-    <!-- TODO: Update blank fragment layout -->
+    <!-- EditText for user input -->
+    <EditText
+        android:id="@+id/editSearchtxt"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="8dp"
+        android:inputType="text"
+        android:hint="Search..."
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/spinner_search_type"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="@id/spinner_search_type" />
 
+    <!-- Spinner for search type -->
+    <Spinner
+        android:id="@+id/spinner_search_type"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="@id/editSearchtxt"
+        android:layout_marginEnd="16dp" />
+
+    <!-- RecyclerView for search results -->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerViewSearch"
-        android:layout_width="399dp"
-        android:layout_height="382dp"
-        android:layout_marginStart="2dp"
-        android:layout_marginTop="20dp"
-        android:clickable="false"
-        android:focusable="false"
+        android:layout_width="407dp"
+        android:layout_height="450dp"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="47dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editSearchtxt" />
 
-    <EditText
-        android:id="@+id/editSearchtxt"
-        android:layout_width="401dp"
-        android:layout_height="99dp"
-        android:layout_marginStart="4dp"
-        android:layout_marginTop="4dp"
-        android:ems="10"
-        android:inputType="text"
-        android:text="What do you think"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
+    <!-- Button for searching -->
     <Button
         android:id="@+id/btnSearch"
-        android:layout_width="204dp"
-        android:layout_height="68dp"
-        android:layout_marginStart="200dp"
-        android:layout_marginTop="10dp"
+        android:layout_width="232dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="179dp"
         android:text="Find"
-        android:textSize="24sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/recyclerViewSearch" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

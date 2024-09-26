@@ -11,7 +11,10 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -30,6 +33,8 @@ public class Fragment_Search extends Fragment implements SearchFragmentView, OnI
     RecyclerView myrecyclerView;
     TextView editSearchtxt;
     Button btnSearch;
+    Spinner searchTypeSpinner;
+    String selectedSearchType;
 
     SearchForMealsPresenterImpl mySearchForMealsImpl;
     AdapterOfSearchFragment myAdapterOfSearchFragment;
@@ -42,6 +47,25 @@ public class Fragment_Search extends Fragment implements SearchFragmentView, OnI
 
         editSearchtxt = view.findViewById(R.id.editSearchtxt);
         btnSearch = view.findViewById(R.id.btnSearch);
+        searchTypeSpinner = view.findViewById(R.id.spinner_search_type);
+        // Setup spinner
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getContext(),
+                R.array.search_types, android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        searchTypeSpinner.setAdapter(adapter);
+
+        // Listen for spinner selection changes
+        searchTypeSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
+                selectedSearchType = parentView.getItemAtPosition(position).toString();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parentView) {
+                // Do nothing
+            }
+        });
 
         // Initialize RecyclerView
         myrecyclerView = view.findViewById(R.id.recyclerViewSearch);
@@ -60,7 +84,9 @@ public class Fragment_Search extends Fragment implements SearchFragmentView, OnI
             @Override
             public void onClick(View view) {
                 //Arrabiata
-                mySearchForMealsImpl.getProductsbyCountry(editSearchtxt.getText().toString()); //Canadian
+
+                performSearch();
+                //mySearchForMealsImpl.getProductsbyCountry(editSearchtxt.getText().toString()); //Canadian
                 //mySearchForMealsImpl.getProductsbyIngredient(editSearchtxt.getText().toString());
                 //mySearchForMealsImpl.getProductsbyCategory(editSearchtxt.getText().toString()); //Seafood
 
@@ -69,6 +95,24 @@ public class Fragment_Search extends Fragment implements SearchFragmentView, OnI
 
         return view;
       }
+
+    private void performSearch() {
+        String query = editSearchtxt.getText().toString();
+        switch (selectedSearchType) {
+            case "Category":
+                mySearchForMealsImpl.getProductsbyCategory(query);
+                break;
+            case "Country":
+                mySearchForMealsImpl.getProductsbyCountry(query);
+                break;
+            case "Ingredient":
+                mySearchForMealsImpl.getProductsbyIngredient(query);
+                break;
+            default:
+                Toast.makeText(getContext(), "Please select a search type", Toast.LENGTH_SHORT).show();
+                break;
+        }
+    }
 
     @Override
     public void showProducts(List<POJO_class> l_list) {
