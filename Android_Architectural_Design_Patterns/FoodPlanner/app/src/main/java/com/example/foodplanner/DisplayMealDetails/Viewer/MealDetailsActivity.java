@@ -2,6 +2,7 @@ package com.example.foodplanner.DisplayMealDetails.Viewer;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -19,14 +20,12 @@ import com.example.foodplanner.DB.MealsLocalDataSourceImpl;
 import com.example.foodplanner.DisplayMealDetails.Presenter.DisplayMealDetailsPresenterImpl;
 import com.example.foodplanner.Network.MealsRemoteDataSourceImpl;
 import com.example.foodplanner.R;
-import com.example.foodplanner.SearchForMeals.Presenter.SearchForMealsPresenterImpl;
 import com.example.foodplanner.model.MealsRepositoryImpl;
 import com.example.foodplanner.model.POJO_class;
 
-import java.nio.charset.StandardCharsets;
 import java.util.List;
 
-public class MealDetailsActivity extends AppCompatActivity implements MealDetailsView{
+public class MealDetailsActivity extends AppCompatActivity implements MealDetailsView , if_AddFavProduct{
 
     private TextView   txt_meal_name;
     private ImageView  img_meal;
@@ -52,7 +51,7 @@ public class MealDetailsActivity extends AppCompatActivity implements MealDetail
         txt_steps = findViewById(R.id.txt_steps);
         txt_ingredients = findViewById(R.id.txt_ingredients);
         video_view = findViewById(R.id.video_view);
-        btn_favorite = findViewById(R.id.btn_favorite);
+        btn_favorite = findViewById(R.id.btn_delete);
 
         myDisplayMealDetailsPresenterImpl = new DisplayMealDetailsPresenterImpl(this, MealsRepositoryImpl.getInstance(MealsRemoteDataSourceImpl.getInstance(this), MealsLocalDataSourceImpl.getInstance(this)));
 
@@ -87,5 +86,18 @@ public class MealDetailsActivity extends AppCompatActivity implements MealDetail
                 .into(this.img_meal);
 
         //txt_ingredients.setText(l_list.get(0).get);
+
+        btn_favorite.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onFavAddclick(l_list.get(0));
+                // holder.btnAddToFav.setBackgroundColor(0x03A9F4FF);
+            }
+        });
+    }
+
+    @Override
+    public void onFavAddclick(POJO_class favProduct) {
+        myDisplayMealDetailsPresenterImpl.addToFav(favProduct);
     }
 }

@@ -1,73 +1,77 @@
-<?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:fillViewport="true">
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/main"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        tools:context=".MealDetailActivity">
+        android:layout_marginTop="150dp">
 
+        <!-- Meal Name -->
         <TextView
             android:id="@+id/txt_meal_name"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:padding="16dp"
+            android:padding="8dp"
             android:text="Meal Name"
-            android:textSize="24sp"
+            android:textSize="18sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
+        <!-- Meal Image -->
         <ImageView
             android:id="@+id/img_meal"
-            android:layout_width="409dp"
+            android:layout_width="0dp"
             android:layout_height="200dp"
             android:scaleType="centerCrop"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/txt_meal_name"
-            app:srcCompat="@drawable/ic_launcher_background" />
+            app:layout_constraintTop_toBottomOf="@id/txt_meal_name" />
 
+        <!-- Origin Country -->
         <TextView
             android:id="@+id/txt_origin_country"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:padding="16dp"
+            android:padding="8dp"
             android:text="Country of Origin"
-            android:textSize="18sp"
+            android:textSize="14sp"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/img_meal" />
 
+        <!-- Ingredients -->
         <TextView
             android:id="@+id/txt_ingredients"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:padding="16dp"
+            android:padding="8dp"
             android:text="Ingredients"
-            android:textSize="18sp"
+            android:textSize="14sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/txt_origin_country" />
 
-        <!-- Steps section (no need for scroll view since the entire activity scrolls now) -->
+        <!-- Steps to Prepare -->
         <TextView
             android:id="@+id/txt_steps"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:padding="16dp"
+            android:layout_marginTop="8dp"
+            android:padding="8dp"
             android:text="Steps to Prepare"
-            android:textSize="18sp"
+            android:textSize="14sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/txt_ingredients" />
 
+        <!-- Video View (for embedded videos) -->
         <VideoView
             android:id="@+id/video_view"
             android:layout_width="0dp"
@@ -77,15 +81,17 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/txt_steps" />
 
+        <!-- Favorite Button -->
         <Button
             android:id="@+id/btn_delete"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:layout_marginEnd="16dp"
-            android:text="Add to Favorites"
+            android:text="Remove"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/video_view" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
-</ScrollView>
+
+</LinearLayout>

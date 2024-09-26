@@ -1,5 +1,7 @@
 package com.example.foodplanner.DisplayMealDetails.Presenter;
 
+import android.util.Log;
+
 import com.example.foodplanner.DisplayMealDetails.Viewer.MealDetailsView;
 import com.example.foodplanner.Network.NetworkCallback;
 import com.example.foodplanner.SearchForMeals.Viewer.SearchFragmentView;
@@ -31,4 +33,11 @@ public class DisplayMealDetailsPresenterImpl implements DisplayMealDetailsPresen
     public void onFailureResult(String ErrorMsg) {
 
     }
+
+    @Override
+    public void addToFav(POJO_class myProduct) {
+        _repo.insertProduct(myProduct);
+        Log.i("TAG", "addToFav");
+    }
+
 }
