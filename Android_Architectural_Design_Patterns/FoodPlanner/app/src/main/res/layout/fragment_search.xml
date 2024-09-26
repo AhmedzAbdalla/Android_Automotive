@@ -10,20 +10,21 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerViewSearch"
-        android:layout_width="match_parent"
-        android:layout_height="535dp"
-        android:layout_marginBottom="87dp"
-        android:focusable="false"
+        android:layout_width="399dp"
+        android:layout_height="382dp"
+        android:layout_marginStart="2dp"
+        android:layout_marginTop="20dp"
         android:clickable="false"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        android:focusable="false"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editSearchtxt" />
 
     <EditText
         android:id="@+id/editSearchtxt"
         android:layout_width="401dp"
         android:layout_height="99dp"
-        android:layout_marginStart="7dp"
-        android:layout_marginTop="7dp"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="4dp"
         android:ems="10"
         android:inputType="text"
         android:text="What do you think"
@@ -34,8 +35,8 @@
         android:id="@+id/btnSearch"
         android:layout_width="204dp"
         android:layout_height="68dp"
-        android:layout_marginStart="149dp"
-        android:layout_marginTop="3dp"
+        android:layout_marginStart="200dp"
+        android:layout_marginTop="10dp"
         android:text="Find"
         android:textSize="24sp"
         app:layout_constraintStart_toStartOf="parent"

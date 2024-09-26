@@ -51,15 +51,7 @@ public class Fragment_Search extends Fragment implements SearchFragmentView, OnI
         myrecyclerView.setLayoutManager(layoutManager);
 
         myAdapterOfSearchFragment = new AdapterOfSearchFragment(this.getContext(), this);
-        //List<POJO_class> test = new ArrayList<>();
-        //
-        //POJO_class m1 = new POJO_class();
-        //m1.setStrMeal("44");
-        //m1.setIdMeal("55");
-        //m1.setStrCategory("ewewe");
-        //
-        //test.add(m1);
-        //myAdapterOfSearchFragment.setList(test);
+
         myrecyclerView.setAdapter(myAdapterOfSearchFragment);
 
         mySearchForMealsImpl = new SearchForMealsPresenterImpl(this, MealsRepositoryImpl.getInstance(MealsRemoteDataSourceImpl.getInstance(getContext()), MealsLocalDataSourceImpl.getInstance(getContext())));
@@ -75,14 +67,8 @@ public class Fragment_Search extends Fragment implements SearchFragmentView, OnI
             }
         });
 
-
-        //mySearchForMealsImpl = new SearchForMealsPresenterImpl(this, MealsRepositoryImpl.getInstance(MealsRemoteDataSourceImpl.getInstance(getContext()), MealsLocalDataSourceImpl.getInstance(getContext())));
-
-
-        //mySearchForMealsImpl.getProducts();
         return view;
-        //return inflater.inflate(R.layout.fragment_search, container, false);
-    }
+      }
 
     @Override
     public void showProducts(List<POJO_class> l_list) {
@@ -98,10 +84,6 @@ public class Fragment_Search extends Fragment implements SearchFragmentView, OnI
         //====================
         // Create an Intent to start MealDetailActivity
         Intent intent = new Intent(getContext(), MealDetailsActivity.class);
-
-        //Gson gson = new Gson();
-        //String myJson = gson.toJson(vp);
-        //intent.putExtra("myjson", myjson);
 
         // Pass data (the meal name) to the new activity
         intent.putExtra("meal_ID", item.getIdMeal());

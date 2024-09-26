@@ -11,6 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
+import com.example.foodplanner.DisplayFavMeals.View.Fragment_Favorite;
 import com.example.foodplanner.Network.MealsRemoteDataSourceImpl;
 import com.example.foodplanner.Network.NetworkCallback;
 import com.example.foodplanner.SearchForMeals.Viewer.Fragment_Search;
@@ -61,12 +62,12 @@ public class MainActivity extends AppCompatActivity {
                     CurrentFragmentName.setText("Search");
                     Log.i("TAG", "Search Selected");
                 }
-                /*else if (item.getItemId() == R.id.nav_favorite) {
+                else if (item.getItemId() == R.id.nav_search) {
                     selectedFragment = new Fragment_Favorite();
                     CurrentFragmentName.setText("Favorites");
                     Log.i("TAG", "Favorites Selected");
                 }
-                */
+
 
                 //assert selectedFragment != null;
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, selectedFragment, "csc").commit();

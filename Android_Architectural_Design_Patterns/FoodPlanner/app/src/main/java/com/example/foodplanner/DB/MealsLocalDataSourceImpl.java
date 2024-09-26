@@ -36,12 +36,16 @@ public class MealsLocalDataSourceImpl implements MealsLocalDataSource {
         return  repo;
     }
 
-    //get movies from database
+    //get Meals from database
     public LiveData<List<POJO_class>> getStoredData() {
 
         if(storedProducts == null)
         {
             Log.i("TAG", "NILLL");
+        }
+        else
+        {
+            Log.i("TAG", "bbb");
         }
         return storedProducts;
 
