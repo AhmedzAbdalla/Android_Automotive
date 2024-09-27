@@ -9,4 +9,7 @@ public interface MealsRemoteDataSource {
     public void searchForMealbyCountry(NetworkCallback myNetworkCallback, String CountryName);
 
     public void searchForMealbyCategory(NetworkCallback myNetworkCallback, String CategoryName);
+
+    public void fetchRandomMeal(NetworkCallback myNetworkCallback);
+
 }

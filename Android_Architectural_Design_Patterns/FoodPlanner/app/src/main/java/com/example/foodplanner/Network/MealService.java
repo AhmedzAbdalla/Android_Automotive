@@ -24,4 +24,8 @@ public interface MealService {
 
     @POST("filter.php")
     Call<MealsResponse> searchMealbyCategory(@Query("c") String CountryName);//search by Category
+
+    @GET("random.php")
+    Call<MealsResponse> getrandommeal();
+
 }
