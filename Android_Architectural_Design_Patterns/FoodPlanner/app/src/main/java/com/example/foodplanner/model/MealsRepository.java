@@ -20,6 +20,7 @@ public interface MealsRepository {
 
     public void searchMealbyCategory(NetworkCallback L_NetworkCallback, String prompt);
 
+    public void getRandomMeal(NetworkCallback L_NetworkCallback);
 
     public void insertProduct(POJO_class L_POPojoClass);
 

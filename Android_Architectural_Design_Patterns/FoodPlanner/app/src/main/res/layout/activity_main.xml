@@ -21,11 +21,11 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="1dp"
         android:layout_marginTop="652dp"
-        android:background="#D37F7F"
-        app:menu="@menu/nav_bar_menu_items"
+        android:background="@drawable/bottom_navigation_background"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:menu="@menu/nav_bar_menu_items" />
 
     <TextView
         android:id="@+id/CurrentFragmentName"

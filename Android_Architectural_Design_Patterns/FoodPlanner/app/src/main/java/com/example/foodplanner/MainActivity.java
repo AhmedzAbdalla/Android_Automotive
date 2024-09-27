@@ -58,12 +58,13 @@ public class MainActivity extends AppCompatActivity {
                     CurrentFragmentName.setText("Home");
                     Log.i("TAG", "Home Selected");
                 } else if (item.getItemId() == R.id.nav_favorite) {
-                    selectedFragment = new Fragment_Search();
+                    //selectedFragment = new Fragment_Search();
+                    selectedFragment = new Fragment_Favorite();
                     CurrentFragmentName.setText("Search");
                     Log.i("TAG", "Search Selected");
                 }
                 else if (item.getItemId() == R.id.nav_search) {
-                    selectedFragment = new Fragment_Favorite();
+                    selectedFragment = new Fragment_Search();
                     CurrentFragmentName.setText("Favorites");
                     Log.i("TAG", "Favorites Selected");
                 }
