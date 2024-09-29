@@ -77,16 +77,21 @@ public class AdapterOfSearchFragment extends RecyclerView.Adapter<AdapterOfSearc
 
     @Override
     public void onBindViewHolder(ViewHolder viewHolder, final int position) {
-        viewHolder.txt_meal_name.setText(myDataSet.get(position).getStrMeal());
-        Log.i("TAG", "ddd");
-        Log.i("TAG", myDataSet.get(position).getStrMeal());
-        Glide.with(_context)
-                .load(myDataSet.get(position).getStrMealThumb())
-                .apply(new RequestOptions()
-                        .override(200, 200)
-                        .placeholder(R.drawable.ic_launcher_foreground)
-                        .error(R.drawable.ic_launcher_foreground))
-                .into(viewHolder.img);
+
+        if(myDataSet!= null)
+        {
+            viewHolder.txt_meal_name.setText(myDataSet.get(position).getStrMeal());
+            Log.i("TAG", "ddd");
+            Log.i("TAG", myDataSet.get(position).getStrMeal());
+            Glide.with(_context)
+                    .load(myDataSet.get(position).getStrMealThumb())
+                    .apply(new RequestOptions()
+                            .override(200, 200)
+                            .placeholder(R.drawable.ic_launcher_foreground)
+                            .error(R.drawable.ic_launcher_foreground))
+                    .into(viewHolder.img);
+        }
+
 
         // Set the click listener for the item
 
@@ -105,7 +110,8 @@ public class AdapterOfSearchFragment extends RecyclerView.Adapter<AdapterOfSearc
 
     @Override
     public int getItemCount() {
-        Log.i("TAG", "datasetcount");
+        //Log.i("TAG", "myDataSet.get(1).getStrMeal()");
+        //Log.i("TAG", myDataSet.get(1).getStrMeal());
         return myDataSet.size();
     }
 }

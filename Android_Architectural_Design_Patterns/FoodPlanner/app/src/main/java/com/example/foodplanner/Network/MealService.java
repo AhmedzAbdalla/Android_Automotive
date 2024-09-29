@@ -2,6 +2,7 @@ package com.example.foodplanner.Network;
 
 
 
+import com.example.foodplanner.model.CategoryResponse;
 import com.example.foodplanner.model.MealsResponse;
 
 import retrofit2.Call;
@@ -27,5 +28,8 @@ public interface MealService {
 
     @GET("random.php")
     Call<MealsResponse> getrandommeal();
+
+    @GET("categories.php")
+    Call<CategoryResponse> getMealsCategories();
 
 }

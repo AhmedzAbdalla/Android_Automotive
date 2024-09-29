@@ -12,4 +12,6 @@ public interface MealsRemoteDataSource {
 
     public void fetchRandomMeal(NetworkCallback myNetworkCallback);
 
+    public void fetchMealsCategories(NetworkCallback myNetworkCallback);
+
 }

@@ -3,6 +3,7 @@ package com.example.foodplanner.RandomMeal.Presenter;
 import com.example.foodplanner.DisplayMealDetails.Viewer.MealDetailsView;
 import com.example.foodplanner.Network.NetworkCallback;
 import com.example.foodplanner.RandomMeal.Viewer.RandomMealView;
+import com.example.foodplanner.model.Category_Pojo;
 import com.example.foodplanner.model.MealsRepository;
 import com.example.foodplanner.model.POJO_class;
 
@@ -31,6 +32,16 @@ public class RandomMealPresenterImpl implements RandomMealPresenter, NetworkCall
 
     @Override
     public void onFailureResult(String ErrorMsg) {
+
+    }
+
+    @Override
+    public void onSuccessResultCat(List<Category_Pojo> myproducts) {
+
+    }
+
+    @Override
+    public void onFailureResultCat(String ErrorMsg) {
 
     }
 }
