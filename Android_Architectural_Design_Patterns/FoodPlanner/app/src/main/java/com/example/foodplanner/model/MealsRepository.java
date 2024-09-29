@@ -22,6 +22,8 @@ public interface MealsRepository {
 
     public void getRandomMeal(NetworkCallback L_NetworkCallback);
 
+    public void getMealsCategories(NetworkCallback L_NetworkCallback);
+
     public void insertProduct(POJO_class L_POPojoClass);
 
     public void deleteProduct(POJO_class L_POPojoClass);

@@ -3,6 +3,8 @@ package com.example.foodplanner.Network;
 import android.content.Context;
 import android.util.Log;
 
+import com.example.foodplanner.model.CategoryResponse;
+import com.example.foodplanner.model.Category_Pojo;
 import com.example.foodplanner.model.MealsResponse;
 import com.example.foodplanner.model.POJO_class;
 
@@ -19,6 +21,7 @@ public class MealsRemoteDataSourceImpl implements MealsRemoteDataSource {
     private static MealsRemoteDataSourceImpl instance;
     private MealService productsApi;
     private Call<MealsResponse> call;
+    private Call<CategoryResponse> call_Category;
     // Constructor
     private MealsRemoteDataSourceImpl(Context context) {
         Retrofit retrofit = new Retrofit.Builder()
@@ -109,7 +112,7 @@ public class MealsRemoteDataSourceImpl implements MealsRemoteDataSource {
                     myNetworkCallback.onSuccessResult(response.body().getMeals());
 
                     //for (POJO_class meal : meals) {
-                        Log.i("TAG", "ccccppc");
+                        Log.i("TAG", response.body().getMeals().get(0).getStrMeal());
                     //    Log.i("Meal", "Meal Name: " + meal.getStrMeal());
                     //    Log.i("Meal", "Meal Name: " + meal.getStrCategory());
                     //    // Do something with the meal data
@@ -180,6 +183,33 @@ public class MealsRemoteDataSourceImpl implements MealsRemoteDataSource {
             @Override
             public void onFailure(Call<MealsResponse> call, Throwable t) {
                 myNetworkCallback.onFailureResult("No Response");
+                Log.e("API_ERROR", "Request failed: " + t.getMessage());
+            }
+        });
+    }
+
+    @Override
+    public void fetchMealsCategories(NetworkCallback myNetworkCallback) {
+        call_Category = productsApi.getMealsCategories();
+
+        call_Category.enqueue(new retrofit2.Callback<CategoryResponse>() {
+            @Override
+            public void onResponse(Call<CategoryResponse> call, Response<CategoryResponse> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    //List<POJO_class> meals = response.body().getCategories();
+                    // Handle the meal data here
+
+                    Log.i("TAG", response.body().getCategories().get(0).getStrCategory());
+                    myNetworkCallback.onSuccessResultCat(response.body().getCategories());
+
+                } else {
+                    Log.e("API_ERROR", "Response unsuccessful or body is null");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<CategoryResponse> call, Throwable t) {
+                myNetworkCallback.onFailureResultCat("No Response");
                 Log.e("API_ERROR", "Request failed: " + t.getMessage());
             }
         });

@@ -5,6 +5,7 @@ import android.util.Log;
 import com.example.foodplanner.Network.NetworkCallback;
 import com.example.foodplanner.SearchForMeals.Viewer.Fragment_Search;
 import com.example.foodplanner.SearchForMeals.Viewer.SearchFragmentView;
+import com.example.foodplanner.model.Category_Pojo;
 import com.example.foodplanner.model.MealsRepository;
 import com.example.foodplanner.model.POJO_class;
 
@@ -32,6 +33,16 @@ public class SearchForMealsPresenterImpl implements SearchForMealsPresenter, Net
     }
 
     @Override
+    public void onSuccessResultCat(List<Category_Pojo> myproducts) {
+
+    }
+
+    @Override
+    public void onFailureResultCat(String ErrorMsg) {
+
+    }
+
+    @Override
     public void getProductsbyIngredient(String l_meal) {
        _repo.searchMealbyIngredient(this, l_meal);
         Log.i("TAG", "mmmm");
@@ -40,6 +51,7 @@ public class SearchForMealsPresenterImpl implements SearchForMealsPresenter, Net
     @Override
     public void getProductsbyCountry(String l_country) {
         _repo.searchMealbyCountry(this,l_country);
+        Log.i("TAG", "mmmm");
     }
 
     @Override

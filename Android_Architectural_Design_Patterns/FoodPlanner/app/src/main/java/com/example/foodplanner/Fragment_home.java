@@ -1,5 +1,6 @@
 package com.example.foodplanner;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -25,20 +26,34 @@ import com.example.foodplanner.Network.MealsRemoteDataSourceImpl;
 import com.example.foodplanner.RandomMeal.Presenter.RandomMealPresenterImpl;
 import com.example.foodplanner.RandomMeal.Viewer.OnRandomItemClickListener;
 import com.example.foodplanner.RandomMeal.Viewer.RandomMealView;
-import com.example.foodplanner.SearchForMeals.Viewer.AdapterOfSearchFragment;
+import com.example.foodplanner.listingbycategory.Presenter.listingbycategoryPresenterImpl;
+import com.example.foodplanner.listingbycategory.View.Activity_MealsbyCatgeory;
+import com.example.foodplanner.listingbycategory.View.AdapterOfCategorylisting;
+import com.example.foodplanner.listingbycategory.View.OnCategoryItemClickListener;
+import com.example.foodplanner.listingbycategory.View.listingbycategoryView;
+import com.example.foodplanner.model.Category_Pojo;
 import com.example.foodplanner.model.MealsRepositoryImpl;
 import com.example.foodplanner.model.POJO_class;
 
 import java.util.List;
 
-public class Fragment_home extends Fragment implements RandomMealView, OnRandomItemClickListener {
+public class Fragment_home extends Fragment implements RandomMealView, OnRandomItemClickListener, listingbycategoryView, OnCategoryItemClickListener {
 
     RandomMealPresenterImpl myRandomMealPresenterImpl;
     List<POJO_class> MyRandomeMeal;
 
+    //========================== for listing by category
+    RecyclerView myrecyclerViewcategorylist;
+    LiveData<List<POJO_class>> MealsCategories;
+
+    listingbycategoryPresenterImpl mylistingbycategoryPresenterImpl;
+    AdapterOfCategorylisting myAdapterOfCategorylisting;
+    //==========================
+
     TextView textBelowImage;
     ImageView imageView;
 
+    @SuppressLint("WrongViewCast")
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -49,6 +64,28 @@ public class Fragment_home extends Fragment implements RandomMealView, OnRandomI
 
         // Find the inner ConstraintLayout container
         View innerContainer = view.findViewById(R.id.container);
+
+        //====================== for listing by category
+
+
+
+        // Initialize RecyclerView
+        myrecyclerViewcategorylist = view.findViewById(R.id.recyclerViewCategories);
+        myrecyclerViewcategorylist.setHasFixedSize(true);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
+        layoutManager.setOrientation(RecyclerView.HORIZONTAL);
+        myrecyclerViewcategorylist.setLayoutManager(layoutManager);
+
+
+        myAdapterOfCategorylisting = new AdapterOfCategorylisting(this.getContext() , this);
+        myrecyclerViewcategorylist.setAdapter(myAdapterOfCategorylisting);
+
+        mylistingbycategoryPresenterImpl = new listingbycategoryPresenterImpl(this, MealsRepositoryImpl.getInstance(MealsRemoteDataSourceImpl.getInstance(getContext()), MealsLocalDataSourceImpl.getInstance(getContext())));
+
+
+       mylistingbycategoryPresenterImpl.getMealsCatgeories();
+        //==========================
+
 
 
 
@@ -101,5 +138,29 @@ public class Fragment_home extends Fragment implements RandomMealView, OnRandomI
         Log.i("TAG", "onItemClick");
         Toast.makeText(getContext(), "Clicked: " + item.getIdMeal(), Toast.LENGTH_SHORT).show();
 
+    }
+
+    @Override
+    public void displayMealsCatgeories(List<Category_Pojo> l_list) {
+
+        Log.i("TAG", l_list.get(0).getStrCategory());
+        myAdapterOfCategorylisting.setList(l_list);
+        myAdapterOfCategorylisting.notifyDataSetChanged();
+    }
+
+    @Override
+    public void onCategoryItemClick(Category_Pojo item) {
+        // Create an Intent to start MealDetailActivity
+        Intent intent = new Intent(getContext(), Activity_MealsbyCatgeory.class);
+
+        // Pass data (the meal name) to the new activity
+        intent.putExtra("CategoryName", item.getStrCategory());
+
+        // Start the new activity
+        startActivity(intent);
+        //====================
+
+        Log.i("TAG", "onItemClick");
+        Toast.makeText(getContext(), "Clicked: " + item.getStrCategory(), Toast.LENGTH_SHORT).show();
     }
 }
