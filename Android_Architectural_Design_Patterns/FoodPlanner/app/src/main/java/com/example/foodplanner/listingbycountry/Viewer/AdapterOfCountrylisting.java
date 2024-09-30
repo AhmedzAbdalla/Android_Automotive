@@ -32,12 +32,12 @@ public class AdapterOfCountrylisting
         //private final TextView textView;
 
         private TextView CountrytextBelowImage;
-        //private ImageView CatimageView;
+        private ImageView CatimageView;
 
         public ViewHolder(View view) {
             super(view);
             CountrytextBelowImage = view.findViewById(R.id.countryName);
-            //CatimageView = view.findViewById(R.id.categoryImage);
+            CatimageView = view.findViewById(R.id.categoryImage);
 
         }
 
@@ -78,7 +78,7 @@ public class AdapterOfCountrylisting
             Log.i("TAG", "!!!!!!!!!!!!!!");
             //Log.i("TAG", myDataSet.get(position).toString().);
             viewHolder.CountrytextBelowImage.setText(myDataSet.get(position).getStrArea());
-
+            viewHolder.CatimageView.;
            // Glide.with(_context)
            //         .load(myDataSet.get(position).getStrCategoryThumb())
            //         .apply(new RequestOptions()

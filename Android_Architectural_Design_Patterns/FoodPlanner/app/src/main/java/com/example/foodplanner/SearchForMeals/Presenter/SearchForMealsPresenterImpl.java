@@ -22,7 +22,7 @@ public class SearchForMealsPresenterImpl implements SearchForMealsPresenter, Net
     }
 
     @Override
-    public void onSuccessResult(List<POJO_class> myproducts) {
+    public void onSuccessResult(List<POJO_class> myproducts, int l_flag) {
         _view.showProducts(myproducts);
         Log.i("TAG", "cccccc");
     }
@@ -50,7 +50,7 @@ public class SearchForMealsPresenterImpl implements SearchForMealsPresenter, Net
 
     @Override
     public void getProductsbyCountry(String l_country) {
-        _repo.searchMealbyCountry(this,l_country);
+        _repo.searchMealbyCountry(this,l_country, 1);
         Log.i("TAG", "mmmm");
     }
 

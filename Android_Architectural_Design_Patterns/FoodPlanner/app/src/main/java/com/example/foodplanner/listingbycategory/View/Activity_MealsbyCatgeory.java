@@ -22,6 +22,7 @@ import com.example.foodplanner.model.MealsRepositoryImpl;
 import com.example.foodplanner.model.POJO_class;
 
 import java.util.List;
+import java.util.Objects;
 
 public class Activity_MealsbyCatgeory extends AppCompatActivity implements CategoryMealsView , CategoryMealonItemClickListener, CountryMealsView {
 
@@ -35,7 +36,7 @@ public class Activity_MealsbyCatgeory extends AppCompatActivity implements Categ
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_mealsby_catgeory);
 
-        //String mealName = getIntent().getStringExtra("CategoryName");
+        String code = getIntent().getStringExtra("code");
 
         // Initialize RecyclerView
         myrecyclerView = findViewById(R.id.recyclerViewCategoryMeals);
@@ -47,19 +48,26 @@ public class Activity_MealsbyCatgeory extends AppCompatActivity implements Categ
         myAdapter_item_meal_for_listing = new Adapter_item_meal_for_listing(this , this);
         myrecyclerView.setAdapter(myAdapter_item_meal_for_listing);
 
+        if(Objects.equals(code, "categoryReq"))
+        {
+            mylistingbycategoryPresenterImpl = new listingbycategoryPresenterImpl((CategoryMealsView)this, MealsRepositoryImpl.getInstance(MealsRemoteDataSourceImpl.getInstance(this), MealsLocalDataSourceImpl.getInstance(this)));
 
-        //mylistingbycategoryPresenterImpl = new listingbycategoryPresenterImpl((CategoryMealsView)this, MealsRepositoryImpl.getInstance(MealsRemoteDataSourceImpl.getInstance(this), MealsLocalDataSourceImpl.getInstance(this)));
+            String mealName = getIntent().getStringExtra("CategoryName");
 
-        //String mealName = getIntent().getStringExtra("CategoryName");
-        String mealName = getIntent().getStringExtra("CountryName");
-        //mylistingbycategoryPresenterImpl.getCategoryMeals(mealName); //CountryName
+            mylistingbycategoryPresenterImpl.getCategoryMeals(mealName); //CountryName
+
+        }
+        else if(Objects.equals(code, "countryReq") )
+        {
+            String mealName = getIntent().getStringExtra("CountryName");
+
+            mylistingbycountryPresenterImpl = new listingbycountryPresenterImpl(this, MealsRepositoryImpl.getInstance(MealsRemoteDataSourceImpl.getInstance(this), MealsLocalDataSourceImpl.getInstance(this)));
+            mylistingbycountryPresenterImpl.getCountryMeals(mealName);
+            Toast.makeText(this, "i'm Clicked: " + mealName, Toast.LENGTH_SHORT).show();
+
+        }
 
 
-        mylistingbycountryPresenterImpl = new listingbycountryPresenterImpl(this, MealsRepositoryImpl.getInstance(MealsRemoteDataSourceImpl.getInstance(this), MealsLocalDataSourceImpl.getInstance(this)));
-
-
-        //mylistingbycountryPresenterImpl.getCountryMeals(mealName);
-        Toast.makeText(this, "i'm Clicked: " + mealName, Toast.LENGTH_SHORT).show();
 
     }
 

@@ -16,7 +16,7 @@ public interface MealsRepository {
 
     public void searchMealbyIngredient(NetworkCallback L_NetworkCallback, String prompt);
 
-    public void searchMealbyCountry(NetworkCallback L_NetworkCallback, String prompt);
+    public void searchMealbyCountry(NetworkCallback L_NetworkCallback, String prompt, int l_flag);
 
     public void searchMealbyCategory(NetworkCallback L_NetworkCallback, String prompt);
 

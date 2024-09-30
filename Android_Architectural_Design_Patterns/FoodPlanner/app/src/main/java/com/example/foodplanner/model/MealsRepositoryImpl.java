@@ -47,8 +47,8 @@ public class MealsRepositoryImpl implements  MealsRepository {
     }
 
     @Override
-    public void searchMealbyCountry(NetworkCallback L_NetworkCallback, String prompt) {
-        myMealssRemoteDataSourceImpl.searchForMealbyCountry(L_NetworkCallback , prompt);
+    public void searchMealbyCountry(NetworkCallback L_NetworkCallback, String prompt, int l_flag) {
+        myMealssRemoteDataSourceImpl.searchForMealbyCountry(L_NetworkCallback , prompt, l_flag);
     }
 
     @Override

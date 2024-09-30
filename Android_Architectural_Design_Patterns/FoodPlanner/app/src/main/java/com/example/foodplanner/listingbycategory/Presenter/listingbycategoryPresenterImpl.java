@@ -41,7 +41,7 @@ public class listingbycategoryPresenterImpl implements listingbycategoryPresente
     }
 
     @Override
-    public void onSuccessResult(List<POJO_class> myproducts) {
+    public void onSuccessResult(List<POJO_class> myproducts, int flag) {
         _view2.displayCatgeoryMeals(myproducts);
         //Log.i("TAG", String.valueOf(myproducts.size()));
     }

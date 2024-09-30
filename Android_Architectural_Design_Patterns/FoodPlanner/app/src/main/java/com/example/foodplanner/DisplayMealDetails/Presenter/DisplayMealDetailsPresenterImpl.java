@@ -26,7 +26,7 @@ public class DisplayMealDetailsPresenterImpl implements DisplayMealDetailsPresen
     }
 
     @Override
-    public void onSuccessResult(List<POJO_class> myproducts) {
+    public void onSuccessResult(List<POJO_class> myproducts, int flag) {
         _view.showMealDisplay(myproducts);
     }
 

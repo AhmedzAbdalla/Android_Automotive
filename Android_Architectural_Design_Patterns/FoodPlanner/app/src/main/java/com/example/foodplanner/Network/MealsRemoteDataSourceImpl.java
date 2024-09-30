@@ -48,7 +48,7 @@ public class MealsRemoteDataSourceImpl implements MealsRemoteDataSource {
             public void onResponse(Call<MealsResponse> call, Response<MealsResponse> response) {
                 if (response.isSuccessful() && response.body() != null) {
 
-                    myNetworkCallback.onSuccessResult(response.body().getMeals());
+                    myNetworkCallback.onSuccessResult(response.body().getMeals(), 1);
                     Log.i("RetrofitClient", "here");
                 } else {
                     Log.e("RetrofitClient", "API call failed");
@@ -77,7 +77,7 @@ public class MealsRemoteDataSourceImpl implements MealsRemoteDataSource {
                     List<POJO_class> meals = response.body().getMeals();
                     // Handle the meal data here
 
-                    myNetworkCallback.onSuccessResult(response.body().getMeals());
+                    myNetworkCallback.onSuccessResult(response.body().getMeals(), 1);
 
                     //for (POJO_class meal : meals) {
                     //    Log.i("TAG", "ccccccccccccc");
@@ -99,7 +99,7 @@ public class MealsRemoteDataSourceImpl implements MealsRemoteDataSource {
     }
 
     @Override
-    public void searchForMealbyCountry(NetworkCallback myNetworkCallback, String CountryName) {
+    public void searchForMealbyCountry(NetworkCallback myNetworkCallback, String CountryName, int l_flag) {
         call = productsApi.searchMealbyCountry(CountryName);
 
         call.enqueue(new retrofit2.Callback<MealsResponse>() {
@@ -109,7 +109,7 @@ public class MealsRemoteDataSourceImpl implements MealsRemoteDataSource {
                     List<POJO_class> meals = response.body().getMeals();
                     // Handle the meal data here
 
-                    myNetworkCallback.onSuccessResult(response.body().getMeals());
+                    myNetworkCallback.onSuccessResult(response.body().getMeals() , l_flag);
 
                     //for (POJO_class meal : meals) {
                     Log.i("TAG", "%^%^$%^$%^");
@@ -142,7 +142,7 @@ public class MealsRemoteDataSourceImpl implements MealsRemoteDataSource {
                     List<POJO_class> meals = response.body().getMeals();
                     // Handle the meal data here
 
-                    myNetworkCallback.onSuccessResult(response.body().getMeals());
+                    myNetworkCallback.onSuccessResult(response.body().getMeals(), 1);
 
                     //for (POJO_class meal : meals) {
                     Log.i("TAG", "vgvj");
@@ -174,7 +174,7 @@ public class MealsRemoteDataSourceImpl implements MealsRemoteDataSource {
                     List<POJO_class> meals = response.body().getMeals();
                     // Handle the meal data here
 
-                    myNetworkCallback.onSuccessResult(response.body().getMeals());
+                    myNetworkCallback.onSuccessResult(response.body().getMeals(), 1);
 
                 } else {
                     Log.e("API_ERROR", "Response unsuccessful or body is null");
@@ -228,7 +228,7 @@ public class MealsRemoteDataSourceImpl implements MealsRemoteDataSource {
                     // Handle the meal data here
                     //Log.i("TAG", "<<<<>>>>");
                     //Log.i("TAG", response.body().getMeals().get(0).getStrArea());
-                    myNetworkCallback.onSuccessResult(response.body().getMeals());
+                    myNetworkCallback.onSuccessResult(response.body().getMeals(), 1);
 
                 } else {
                     Log.e("API_ERROR", "Response unsuccessful or body is null");

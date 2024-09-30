@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface NetworkCallback {
 
-    public void onSuccessResult(List<POJO_class> myproducts);
+    public void onSuccessResult(List<POJO_class> myproducts, int flag);
     public void onFailureResult(String ErrorMsg);
 
     public void onSuccessResultCat(List<Category_Pojo> myproducts);
