@@ -24,6 +24,9 @@ public interface MealsRepository {
 
     public void getMealsCategories(NetworkCallback L_NetworkCallback);
 
+    public void getMealsCountries(NetworkCallback L_NetworkCallback);
+
+
     public void insertProduct(POJO_class L_POPojoClass);
 
     public void deleteProduct(POJO_class L_POPojoClass);

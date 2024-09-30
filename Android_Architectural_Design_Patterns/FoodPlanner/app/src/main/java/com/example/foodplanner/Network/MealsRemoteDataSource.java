@@ -14,4 +14,6 @@ public interface MealsRemoteDataSource {
 
     public void fetchMealsCategories(NetworkCallback myNetworkCallback);
 
+    public void fetchMealsCountries(NetworkCallback myNetworkCallback);
+
 }

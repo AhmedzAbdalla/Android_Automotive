@@ -16,24 +16,26 @@ import com.example.foodplanner.DisplayMealDetails.Viewer.MealDetailsActivity;
 import com.example.foodplanner.Network.MealsRemoteDataSourceImpl;
 import com.example.foodplanner.R;
 import com.example.foodplanner.listingbycategory.Presenter.listingbycategoryPresenterImpl;
+import com.example.foodplanner.listingbycountry.Presenter.listingbycountryPresenterImpl;
+import com.example.foodplanner.listingbycountry.Viewer.CountryMealsView;
 import com.example.foodplanner.model.MealsRepositoryImpl;
 import com.example.foodplanner.model.POJO_class;
 
 import java.util.List;
 
-public class Activity_MealsbyCatgeory extends AppCompatActivity implements CategoryMealsView , CategoryMealonItemClickListener{
+public class Activity_MealsbyCatgeory extends AppCompatActivity implements CategoryMealsView , CategoryMealonItemClickListener, CountryMealsView {
 
     RecyclerView myrecyclerView;
     Adapter_item_meal_for_listing myAdapter_item_meal_for_listing;
     listingbycategoryPresenterImpl mylistingbycategoryPresenterImpl;
-
+    listingbycountryPresenterImpl mylistingbycountryPresenterImpl;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_mealsby_catgeory);
 
-        String mealName = getIntent().getStringExtra("CategoryName");
+        //String mealName = getIntent().getStringExtra("CategoryName");
 
         // Initialize RecyclerView
         myrecyclerView = findViewById(R.id.recyclerViewCategoryMeals);
@@ -46,13 +48,18 @@ public class Activity_MealsbyCatgeory extends AppCompatActivity implements Categ
         myrecyclerView.setAdapter(myAdapter_item_meal_for_listing);
 
 
-        mylistingbycategoryPresenterImpl = new listingbycategoryPresenterImpl(this, MealsRepositoryImpl.getInstance(MealsRemoteDataSourceImpl.getInstance(this), MealsLocalDataSourceImpl.getInstance(this)));
+        //mylistingbycategoryPresenterImpl = new listingbycategoryPresenterImpl((CategoryMealsView)this, MealsRepositoryImpl.getInstance(MealsRemoteDataSourceImpl.getInstance(this), MealsLocalDataSourceImpl.getInstance(this)));
 
-        mylistingbycategoryPresenterImpl.getCategoryMeals(mealName);
+        //String mealName = getIntent().getStringExtra("CategoryName");
+        String mealName = getIntent().getStringExtra("CountryName");
+        //mylistingbycategoryPresenterImpl.getCategoryMeals(mealName); //CountryName
 
 
+        mylistingbycountryPresenterImpl = new listingbycountryPresenterImpl(this, MealsRepositoryImpl.getInstance(MealsRemoteDataSourceImpl.getInstance(this), MealsLocalDataSourceImpl.getInstance(this)));
 
-        Toast.makeText(this, "Clicked: " + mealName, Toast.LENGTH_SHORT).show();
+
+        //mylistingbycountryPresenterImpl.getCountryMeals(mealName);
+        Toast.makeText(this, "i'm Clicked: " + mealName, Toast.LENGTH_SHORT).show();
 
     }
 
@@ -61,9 +68,13 @@ public class Activity_MealsbyCatgeory extends AppCompatActivity implements Categ
         myAdapter_item_meal_for_listing.setList(l_list);
         myAdapter_item_meal_for_listing.notifyDataSetChanged();
 
-
     }
 
+    @Override
+    public void displayCountryMeals(List<POJO_class> l_list) {
+        myAdapter_item_meal_for_listing.setList(l_list);
+        myAdapter_item_meal_for_listing.notifyDataSetChanged();
+    }
 
     @Override
     public void CategoryMealonItemClickListener(POJO_class item) {
@@ -82,4 +93,6 @@ public class Activity_MealsbyCatgeory extends AppCompatActivity implements Categ
         Toast.makeText(this, "Clicked: " + item.getIdMeal(), Toast.LENGTH_SHORT).show();
 
     }
+
+
 }

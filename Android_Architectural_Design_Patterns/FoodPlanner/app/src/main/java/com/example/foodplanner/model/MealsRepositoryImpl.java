@@ -67,6 +67,11 @@ public class MealsRepositoryImpl implements  MealsRepository {
     }
 
     @Override
+    public void getMealsCountries(NetworkCallback L_NetworkCallback) {
+        myMealssRemoteDataSourceImpl.fetchMealsCountries(L_NetworkCallback);
+    }
+
+    @Override
     public void insertProduct(POJO_class L_POPojoClass) {
         myMealsLocalDataSourceImpl.insert(L_POPojoClass);
     }

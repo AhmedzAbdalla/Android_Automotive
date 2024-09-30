@@ -112,6 +112,7 @@ public class MealsRemoteDataSourceImpl implements MealsRemoteDataSource {
                     myNetworkCallback.onSuccessResult(response.body().getMeals());
 
                     //for (POJO_class meal : meals) {
+                    Log.i("TAG", "%^%^$%^$%^");
                         Log.i("TAG", response.body().getMeals().get(0).getStrMeal());
                     //    Log.i("Meal", "Meal Name: " + meal.getStrMeal());
                     //    Log.i("Meal", "Meal Name: " + meal.getStrCategory());
@@ -210,6 +211,33 @@ public class MealsRemoteDataSourceImpl implements MealsRemoteDataSource {
             @Override
             public void onFailure(Call<CategoryResponse> call, Throwable t) {
                 myNetworkCallback.onFailureResultCat("No Response");
+                Log.e("API_ERROR", "Request failed: " + t.getMessage());
+            }
+        });
+    }
+
+    @Override
+    public void fetchMealsCountries(NetworkCallback myNetworkCallback) {
+        call = productsApi.getMealsCountries();
+
+        call.enqueue(new retrofit2.Callback<MealsResponse>() {
+            @Override
+            public void onResponse(Call<MealsResponse> call, retrofit2.Response<MealsResponse> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    List<POJO_class> meals = response.body().getMeals();
+                    // Handle the meal data here
+                    //Log.i("TAG", "<<<<>>>>");
+                    //Log.i("TAG", response.body().getMeals().get(0).getStrArea());
+                    myNetworkCallback.onSuccessResult(response.body().getMeals());
+
+                } else {
+                    Log.e("API_ERROR", "Response unsuccessful or body is null");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<MealsResponse> call, Throwable t) {
+                myNetworkCallback.onFailureResult("No Response");
                 Log.e("API_ERROR", "Request failed: " + t.getMessage());
             }
         });

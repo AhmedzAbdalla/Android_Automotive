@@ -31,13 +31,17 @@ import com.example.foodplanner.listingbycategory.View.Activity_MealsbyCatgeory;
 import com.example.foodplanner.listingbycategory.View.AdapterOfCategorylisting;
 import com.example.foodplanner.listingbycategory.View.OnCategoryItemClickListener;
 import com.example.foodplanner.listingbycategory.View.listingbycategoryView;
+import com.example.foodplanner.listingbycountry.Presenter.listingbycountryPresenterImpl;
+import com.example.foodplanner.listingbycountry.Viewer.AdapterOfCountrylisting;
+import com.example.foodplanner.listingbycountry.Viewer.OnCountryItemClickListener;
+import com.example.foodplanner.listingbycountry.Viewer.listingbycountryView;
 import com.example.foodplanner.model.Category_Pojo;
 import com.example.foodplanner.model.MealsRepositoryImpl;
 import com.example.foodplanner.model.POJO_class;
 
 import java.util.List;
 
-public class Fragment_home extends Fragment implements RandomMealView, OnRandomItemClickListener, listingbycategoryView, OnCategoryItemClickListener {
+public class Fragment_home extends Fragment implements RandomMealView, OnRandomItemClickListener, listingbycategoryView, listingbycountryView,OnCategoryItemClickListener, OnCountryItemClickListener {
 
     RandomMealPresenterImpl myRandomMealPresenterImpl;
     List<POJO_class> MyRandomeMeal;
@@ -48,6 +52,13 @@ public class Fragment_home extends Fragment implements RandomMealView, OnRandomI
 
     listingbycategoryPresenterImpl mylistingbycategoryPresenterImpl;
     AdapterOfCategorylisting myAdapterOfCategorylisting;
+    //==========================
+
+    //==========================
+    RecyclerView myrecyclerViewCountrylist;
+    AdapterOfCountrylisting myAdapterOfCountrylisting;
+    listingbycountryPresenterImpl mylistingbycountryPresenterImpl;
+
     //==========================
 
     TextView textBelowImage;
@@ -84,6 +95,24 @@ public class Fragment_home extends Fragment implements RandomMealView, OnRandomI
 
 
        mylistingbycategoryPresenterImpl.getMealsCatgeories();
+        //==========================
+
+        myrecyclerViewCountrylist = view.findViewById(R.id.recyclerViewCountry);
+        myrecyclerViewCountrylist.setHasFixedSize(true);
+        LinearLayoutManager layoutManager2 = new LinearLayoutManager(getContext());
+        layoutManager2.setOrientation(RecyclerView.HORIZONTAL);
+        myrecyclerViewCountrylist.setLayoutManager(layoutManager2);
+
+        myAdapterOfCountrylisting = new AdapterOfCountrylisting(this.getContext() , this);
+        myrecyclerViewCountrylist.setAdapter(myAdapterOfCountrylisting);
+
+        mylistingbycountryPresenterImpl = new listingbycountryPresenterImpl(this, MealsRepositoryImpl.getInstance(MealsRemoteDataSourceImpl.getInstance(getContext()), MealsLocalDataSourceImpl.getInstance(getContext())));
+
+        mylistingbycountryPresenterImpl.getMealsCountries();
+
+        //==========================
+
+
         //==========================
 
 
@@ -149,6 +178,14 @@ public class Fragment_home extends Fragment implements RandomMealView, OnRandomI
     }
 
     @Override
+    public void displayMealsCountries(List<POJO_class> l_list) {
+        //Log.i("TAG", "&&&&&&&&&&&&&&&&&&");
+        //Log.i("TAG", l_list.get(0).getStrArea());
+        myAdapterOfCountrylisting.setList(l_list);
+        myAdapterOfCountrylisting.notifyDataSetChanged();
+    }
+
+    @Override
     public void onCategoryItemClick(Category_Pojo item) {
         // Create an Intent to start MealDetailActivity
         Intent intent = new Intent(getContext(), Activity_MealsbyCatgeory.class);
@@ -162,5 +199,23 @@ public class Fragment_home extends Fragment implements RandomMealView, OnRandomI
 
         Log.i("TAG", "onItemClick");
         Toast.makeText(getContext(), "Clicked: " + item.getStrCategory(), Toast.LENGTH_SHORT).show();
+    }
+
+
+    @Override
+    public void onCountryItemClick(POJO_class item) {
+        // Create an Intent to start MealDetailActivity
+        Intent intent = new Intent(getContext(), Activity_MealsbyCatgeory.class);
+
+        // Pass data (the meal name) to the new activity
+        intent.putExtra("CountryName", item.getStrArea());
+
+        // Start the new activity
+        startActivity(intent);
+        //====================
+
+        Log.i("TAG", "onItemClick");
+        Toast.makeText(getContext(), "Clicked: " + item.getStrArea(), Toast.LENGTH_SHORT).show();
+
     }
 }

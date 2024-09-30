@@ -32,4 +32,9 @@ public interface MealService {
     @GET("categories.php")
     Call<CategoryResponse> getMealsCategories();
 
+    //list.php?a=list
+
+    @GET("list.php?a=list")
+    Call<MealsResponse> getMealsCountries();
+
 }
