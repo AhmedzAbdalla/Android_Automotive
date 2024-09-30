@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.example.foodplanner.R;
+import com.example.foodplanner.SearchForMeals.Viewer.OnItemClickListener;
 import com.example.foodplanner.model.POJO_class;
 
 import java.util.ArrayList;
@@ -23,10 +24,12 @@ public class Adapter_item_meal_for_listing extends RecyclerView.Adapter<Adapter_
 
     private List<POJO_class> myDataset;
     private Context context;
+    private CategoryMealonItemClickListener myOnCategoryItemClickListener;
 
-    public Adapter_item_meal_for_listing(Context _context) {
+    public Adapter_item_meal_for_listing(Context _context , CategoryMealonItemClickListener l_OnCategoryItemClickListener) {
         this.myDataset = new ArrayList<>();
         this.context = _context;
+        this.myOnCategoryItemClickListener = l_OnCategoryItemClickListener;
     }
 
     public void setList(List<POJO_class> myDataSet)
@@ -69,6 +72,17 @@ public class Adapter_item_meal_for_listing extends RecyclerView.Adapter<Adapter_
                         .placeholder(R.drawable.ic_launcher_foreground)
                         .error(R.drawable.ic_launcher_foreground))
                 .into(holder.meal_image);
+
+        // Set onClickListener on the itemView
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (myOnCategoryItemClickListener != null) {
+                    //Log.d("Adapter", "Item clicked: " + myDataSet.getStrMeal());
+                    myOnCategoryItemClickListener.CategoryMealonItemClickListener(myDataset.get(position));
+                }
+            }
+        });
 
     }
 
