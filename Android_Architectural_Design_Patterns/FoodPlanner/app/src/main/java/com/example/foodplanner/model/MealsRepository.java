@@ -16,13 +16,16 @@ public interface MealsRepository {
 
     public void searchMealbyIngredient(NetworkCallback L_NetworkCallback, String prompt);
 
-    public void searchMealbyCountry(NetworkCallback L_NetworkCallback, String prompt);
+    public void searchMealbyCountry(NetworkCallback L_NetworkCallback, String prompt, int l_flag);
 
     public void searchMealbyCategory(NetworkCallback L_NetworkCallback, String prompt);
 
     public void getRandomMeal(NetworkCallback L_NetworkCallback);
 
     public void getMealsCategories(NetworkCallback L_NetworkCallback);
+
+    public void getMealsCountries(NetworkCallback L_NetworkCallback);
+
 
     public void insertProduct(POJO_class L_POPojoClass);
 

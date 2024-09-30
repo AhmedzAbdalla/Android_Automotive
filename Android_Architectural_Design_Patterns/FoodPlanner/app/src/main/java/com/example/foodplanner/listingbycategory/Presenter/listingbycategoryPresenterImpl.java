@@ -6,6 +6,7 @@ import com.example.foodplanner.Network.NetworkCallback;
 import com.example.foodplanner.RandomMeal.Viewer.RandomMealView;
 import com.example.foodplanner.listingbycategory.View.CategoryMealsView;
 import com.example.foodplanner.listingbycategory.View.listingbycategoryView;
+import com.example.foodplanner.listingbycountry.Viewer.CountryMealsView;
 import com.example.foodplanner.model.Category_Pojo;
 import com.example.foodplanner.model.MealsRepository;
 import com.example.foodplanner.model.POJO_class;
@@ -27,6 +28,7 @@ public class listingbycategoryPresenterImpl implements listingbycategoryPresente
         this._repo = _repo;
     }
 
+
     @Override
     public void getMealsCatgeories() {
         _repo.getMealsCategories(this);
@@ -39,7 +41,7 @@ public class listingbycategoryPresenterImpl implements listingbycategoryPresente
     }
 
     @Override
-    public void onSuccessResult(List<POJO_class> myproducts) {
+    public void onSuccessResult(List<POJO_class> myproducts, int flag) {
         _view2.displayCatgeoryMeals(myproducts);
         //Log.i("TAG", String.valueOf(myproducts.size()));
     }
