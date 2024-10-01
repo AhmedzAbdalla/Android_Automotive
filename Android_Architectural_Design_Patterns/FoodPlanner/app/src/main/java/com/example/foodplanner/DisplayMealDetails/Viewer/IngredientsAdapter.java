@@ -1,5 +1,6 @@
 package com.example.foodplanner.DisplayMealDetails.Viewer;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -59,9 +60,11 @@ public class IngredientsAdapter extends RecyclerView.Adapter<IngredientsAdapter.
     @Override
     public void onBindViewHolder(@NonNull IngredientsAdapter.ViewHolder holder, int position) {
         String ingredient = ingredients.get(position);
+
+        Log.i("TAG", "#@$#@$#@$@##$@$%");
         String measure = measures.get(position);
-        holder.txt_ingredient_name.setText(ingredient);
-        holder.txt_ingredient_measure.setText(measure);
+        holder.txt_ingredient_name.setText("ingredient");
+        holder.txt_ingredient_measure.setText("measure");
         Glide.with(holder.itemView.getContext()).load("https://www.themealdb.com/images/ingredients/" + ingredient + ".png").into(holder.img_ingredient);
 
     }
