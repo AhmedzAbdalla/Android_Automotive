@@ -58,7 +58,7 @@ public class MealDetailsActivity extends AppCompatActivity implements MealDetail
         img_meal = findViewById(R.id.img_meal);
         txt_origin_country = findViewById(R.id.txt_origin_country);
         txt_steps = findViewById(R.id.txt_steps);
-        txt_ingredients = findViewById(R.id.txt_ingredients);
+        //txt_ingredients = findViewById(R.id.txt_ingredients);
         video_view = findViewById(R.id.video_view);
         btn_favorite = findViewById(R.id.btn_delete);
         //===

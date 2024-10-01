@@ -1,10 +1,12 @@
 package com.example.foodplanner.DisplayFavMeals.View;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Observer;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -18,6 +20,7 @@ import android.widget.Toast;
 
 import com.example.foodplanner.DB.MealsLocalDataSourceImpl;
 import com.example.foodplanner.DisplayFavMeals.Presenter.FavoritePresenterImpl;
+import com.example.foodplanner.DisplayMealDetails.Viewer.IngredientsAdapter;
 import com.example.foodplanner.Network.MealsRemoteDataSourceImpl;
 import com.example.foodplanner.R;
 import com.example.foodplanner.SearchForMeals.Presenter.SearchForMealsPresenterImpl;
@@ -38,6 +41,8 @@ public class Fragment_Favorite extends Fragment implements FavView, if_DeleteFav
         FavoritePresenterImpl myFavoritePresenterImpl;
         AdapterOfFavFragment myAdapterOfFavFragment;
 
+
+        @SuppressLint("MissingInflatedId")
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
@@ -55,6 +60,9 @@ public class Fragment_Favorite extends Fragment implements FavView, if_DeleteFav
             myAdapterOfFavFragment = new AdapterOfFavFragment(this.getContext(), this);
             myrecyclerView.setAdapter(myAdapterOfFavFragment);
 
+            //===
+
+            //==
 
             myFavoritePresenterImpl = new FavoritePresenterImpl(this, MealsRepositoryImpl.getInstance(MealsRemoteDataSourceImpl.getInstance(getContext()), MealsLocalDataSourceImpl.getInstance(getContext())));
 
@@ -70,6 +78,7 @@ public class Fragment_Favorite extends Fragment implements FavView, if_DeleteFav
             MyFavMeals.observe(getViewLifecycleOwner(), new Observer<List<POJO_class>>() {
                 @Override
                 public void onChanged(List<POJO_class> pojoClasses) {
+
                     myAdapterOfFavFragment.setList(pojoClasses);
                     myAdapterOfFavFragment.notifyDataSetChanged();
                     //Log.i("TAG", pojoClasses.get(0).getStrMeal());
@@ -81,6 +90,7 @@ public class Fragment_Favorite extends Fragment implements FavView, if_DeleteFav
 
         @Override
         public void showProducts(List<POJO_class> l_list) {
+
             myAdapterOfFavFragment.setList(l_list);
             Log.i("TAG", "zzzz");
             myAdapterOfFavFragment.notifyDataSetChanged();

@@ -11,10 +11,12 @@ import android.widget.TextView;
 import android.widget.VideoView;
 
 import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
+import com.example.foodplanner.DisplayMealDetails.Viewer.IngredientsAdapter;
 import com.example.foodplanner.R;
 import com.example.foodplanner.SearchForMeals.Viewer.OnItemClickListener;
 import com.example.foodplanner.model.POJO_class;
@@ -39,15 +41,21 @@ public class AdapterOfFavFragment extends RecyclerView.Adapter<AdapterOfFavFragm
         private TextView   txt_ingredients;
         private VideoView video_view;
         private Button btn_favorite;
+
+        private RecyclerView recyclerViewIngredients2;
+
         public ViewHolder(View view) {
             super(view);
             txt_meal_name = view.findViewById(R.id.txt_meal_name);
             img_meal = view.findViewById(R.id.img_meal);
             txt_origin_country = view.findViewById(R.id.txt_origin_country);
             txt_steps = view.findViewById(R.id.txt_steps);
-            txt_ingredients = view.findViewById(R.id.txt_ingredients);
+            //txt_ingredients = view.findViewById(R.id.txt_ingredients);
             video_view = view.findViewById(R.id.video_view);
             btn_favorite = view.findViewById(R.id.btn_delete);
+
+            recyclerViewIngredients2 = view.findViewById(R.id.recyclerViewIngredients2);  // Child RecyclerView
+
         }
 
     }
@@ -85,7 +93,7 @@ public class AdapterOfFavFragment extends RecyclerView.Adapter<AdapterOfFavFragm
         String temp = myDataSet.get(0).getStrIngredient1() + " " + myDataSet.get(0).getStrIngredient2();
         temp += " " + myDataSet.get(0).getStrIngredient3() +" "+ myDataSet.get(0).getStrIngredient4();
 
-        viewHolder.txt_ingredients.setText(temp);
+        //viewHolder.txt_ingredients.setText(temp);
        Glide.with(_context)
                .load(myDataSet.get(position).getStrMealThumb())
                .apply(new RequestOptions()
@@ -94,6 +102,27 @@ public class AdapterOfFavFragment extends RecyclerView.Adapter<AdapterOfFavFragm
                        .error(R.drawable.ic_launcher_foreground))
                .into(viewHolder.img_meal);
 
+
+       //===========
+        // Set up the child RecyclerView (for ingredients)
+        List<String> ingredients = new ArrayList<>();
+        List<String> measures = new ArrayList<>();
+        ingredients = myDataSet.get(0).getIngredients();
+        measures = myDataSet.get(0).getMeasures();
+
+        // Initialize the child adapter with the ingredients and measures
+        IngredientsAdapter ingredientsAdapter = new IngredientsAdapter(ingredients);
+        ingredientsAdapter.setList(ingredients, measures);
+        // Set up the layout manager for the child RecyclerView
+        LinearLayoutManager childLayoutManager = new LinearLayoutManager(
+                viewHolder.recyclerViewIngredients2.getContext(),
+                RecyclerView.HORIZONTAL, false); // Horizontal scrolling for ingredients
+
+        viewHolder.recyclerViewIngredients2.setLayoutManager(childLayoutManager);
+        viewHolder.recyclerViewIngredients2.setAdapter(ingredientsAdapter);
+
+
+        // ==========
         viewHolder.btn_favorite.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
