@@ -13,6 +13,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
@@ -38,6 +41,12 @@ public class MealDetailsActivity extends AppCompatActivity implements MealDetail
 
     DisplayMealDetailsPresenterImpl myDisplayMealDetailsPresenterImpl;
 
+    private RecyclerView recyclerViewIngredients;
+
+    private IngredientsAdapter adapter;
+    private List<String> ingredients;
+    private List<String> measures;
+
     @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,7 +61,18 @@ public class MealDetailsActivity extends AppCompatActivity implements MealDetail
         txt_ingredients = findViewById(R.id.txt_ingredients);
         video_view = findViewById(R.id.video_view);
         btn_favorite = findViewById(R.id.btn_delete);
+        //===
+        recyclerViewIngredients = findViewById(R.id.recyclerViewIngredients);
+        recyclerViewIngredients.setHasFixedSize(true);
+        LinearLayoutManager layoutManager = new GridLayoutManager(this , 1);
+        layoutManager.setOrientation(RecyclerView.HORIZONTAL);
+        recyclerViewIngredients.setLayoutManager(layoutManager);
 
+
+        adapter = new IngredientsAdapter(ingredients);
+
+        recyclerViewIngredients.setAdapter(adapter);
+        //==
         myDisplayMealDetailsPresenterImpl = new DisplayMealDetailsPresenterImpl(this, MealsRepositoryImpl.getInstance(MealsRemoteDataSourceImpl.getInstance(this), MealsLocalDataSourceImpl.getInstance(this)));
 
         String mealName = getIntent().getStringExtra("meal_ID");
@@ -69,13 +89,17 @@ public class MealDetailsActivity extends AppCompatActivity implements MealDetail
 
     @Override
     public void showMealDisplay(List<POJO_class> l_list) {
+        ingredients = l_list.get(0).getIngredients();
+        measures = l_list.get(0).getMeasures();
+        adapter.setList(ingredients, measures);
+
         txt_meal_name.setText(l_list.get(0).getStrMeal());
         txt_origin_country.setText(l_list.get(0).getStrArea());
         txt_steps.setText(l_list.get(0).getStrInstructions());
         String temp = l_list.get(0).getStrIngredient1() + " " + l_list.get(0).getStrIngredient2();
         temp += " " + l_list.get(0).getStrIngredient3() +" "+ l_list.get(0).getStrIngredient4();
 
-        txt_ingredients.setText(temp);
+        //txt_ingredients.setText(temp);
 
         Glide.with(this)
                 .load(l_list.get(0).getStrMealThumb())

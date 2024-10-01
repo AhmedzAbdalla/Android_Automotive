@@ -28,6 +28,7 @@ public class AdapterOfCountrylisting
     private Context _context;
     private List<POJO_class> myDataSet;
     private OnCountryItemClickListener myOnCountryItemClickListener;
+    private int [] ImageSrc;
     public static class ViewHolder extends RecyclerView.ViewHolder {
         //private final TextView textView;
 
@@ -37,7 +38,7 @@ public class AdapterOfCountrylisting
         public ViewHolder(View view) {
             super(view);
             CountrytextBelowImage = view.findViewById(R.id.countryName);
-            CatimageView = view.findViewById(R.id.categoryImage);
+            CatimageView = view.findViewById(R.id.countryImage);
 
         }
 
@@ -53,11 +54,12 @@ public class AdapterOfCountrylisting
         Log.i("TAG", "$%#$%#$%");
         Log.i("TAG", this.myDataSet.get(0).getStrArea());
     }
-    public AdapterOfCountrylisting(Context _context , OnCountryItemClickListener l_listener) {
+    public AdapterOfCountrylisting(Context _context , OnCountryItemClickListener l_listener , int[] imageResources) {
 
         this._context = _context;
         this.myDataSet = new ArrayList<>();
         this.myOnCountryItemClickListener = l_listener;
+        this.ImageSrc =imageResources;
     }
 
     @NonNull
@@ -78,7 +80,8 @@ public class AdapterOfCountrylisting
             Log.i("TAG", "!!!!!!!!!!!!!!");
             //Log.i("TAG", myDataSet.get(position).toString().);
             viewHolder.CountrytextBelowImage.setText(myDataSet.get(position).getStrArea());
-            viewHolder.CatimageView.;
+            viewHolder.CatimageView.setImageResource(ImageSrc[position]);
+
            // Glide.with(_context)
            //         .load(myDataSet.get(position).getStrCategoryThumb())
            //         .apply(new RequestOptions()

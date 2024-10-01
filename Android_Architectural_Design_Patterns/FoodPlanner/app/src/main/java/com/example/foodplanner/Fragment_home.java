@@ -63,6 +63,7 @@ public class Fragment_home extends Fragment implements RandomMealView, OnRandomI
 
     TextView textBelowImage;
     ImageView imageView;
+    //int [] imageResources;
 
     @SuppressLint("WrongViewCast")
     @Override
@@ -103,7 +104,39 @@ public class Fragment_home extends Fragment implements RandomMealView, OnRandomI
         layoutManager2.setOrientation(RecyclerView.HORIZONTAL);
         myrecyclerViewCountrylist.setLayoutManager(layoutManager2);
 
-        myAdapterOfCountrylisting = new AdapterOfCountrylisting(this.getContext() , this);
+        // Array of your local image resources
+        int[] imageResources = {
+                R.drawable.american,
+                R.drawable.british,
+                R.drawable.canadian,
+                R.drawable.chinese,
+                R.drawable.croatian,
+                R.drawable.dutch,
+                R.drawable.egyptian,
+                R.drawable.filipino,
+                R.drawable.french,
+                R.drawable.greek,
+                R.drawable.indian,
+                R.drawable.irish,
+                R.drawable.italian,
+                R.drawable.jamaican,
+                R.drawable.japanese,
+                R.drawable.kenyan,
+                R.drawable.malaysian,
+                R.drawable.mexican,
+                R.drawable.moroccan,
+                R.drawable.polish,
+                R.drawable.portuguese,
+                R.drawable.russian,
+                R.drawable.spanish,
+                R.drawable.thai,
+                R.drawable.tunisian,
+                R.drawable.turkish,
+                R.drawable.ukrainian,
+                R.drawable.baseline_image_not_supported_24,
+                R.drawable.vietnamese,};
+
+        myAdapterOfCountrylisting = new AdapterOfCountrylisting(this.getContext() , this, imageResources);
         myrecyclerViewCountrylist.setAdapter(myAdapterOfCountrylisting);
 
         mylistingbycountryPresenterImpl = new listingbycountryPresenterImpl(this, MealsRepositoryImpl.getInstance(MealsRemoteDataSourceImpl.getInstance(getContext()), MealsLocalDataSourceImpl.getInstance(getContext())));
