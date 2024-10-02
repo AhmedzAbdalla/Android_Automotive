@@ -5,6 +5,7 @@ import android.os.Bundle;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -41,7 +42,7 @@ public class Activity_MealsbyCatgeory extends AppCompatActivity implements Categ
         // Initialize RecyclerView
         myrecyclerView = findViewById(R.id.recyclerViewCategoryMeals);
         myrecyclerView.setHasFixedSize(true);
-        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
+        LinearLayoutManager layoutManager = new GridLayoutManager(this, 3);
         layoutManager.setOrientation(RecyclerView.VERTICAL);
         myrecyclerView.setLayoutManager(layoutManager);
 

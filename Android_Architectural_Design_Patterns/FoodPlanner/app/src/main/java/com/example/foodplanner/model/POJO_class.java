@@ -25,6 +25,16 @@ public class POJO_class {
     private String strIngredient5;
     private String strIngredient6;
 
+    public String getStrYoutube() {
+        return strYoutube;
+    }
+
+    public void setStrYoutube(String strYoutube) {
+        this.strYoutube = strYoutube;
+    }
+
+    private String strYoutube;
+
     public void setStrIngredient8(String strIngredient8) {
         this.strIngredient8 = strIngredient8;
     }

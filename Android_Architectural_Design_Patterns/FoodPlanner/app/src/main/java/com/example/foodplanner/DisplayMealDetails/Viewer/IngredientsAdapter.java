@@ -63,8 +63,8 @@ public class IngredientsAdapter extends RecyclerView.Adapter<IngredientsAdapter.
 
         Log.i("TAG", "#@$#@$#@$@##$@$%");
         String measure = measures.get(position);
-        holder.txt_ingredient_name.setText("ingredient");
-        holder.txt_ingredient_measure.setText("measure");
+        holder.txt_ingredient_name.setText(ingredient);
+        holder.txt_ingredient_measure.setText(measure);
         Glide.with(holder.itemView.getContext()).load("https://www.themealdb.com/images/ingredients/" + ingredient + ".png").into(holder.img_ingredient);
 
     }

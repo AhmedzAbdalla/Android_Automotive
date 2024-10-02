@@ -94,16 +94,16 @@ public class AdapterOfFavFragment extends RecyclerView.Adapter<AdapterOfFavFragm
         temp += " " + myDataSet.get(0).getStrIngredient3() +" "+ myDataSet.get(0).getStrIngredient4();
 
         //viewHolder.txt_ingredients.setText(temp);
-       Glide.with(_context)
-               .load(myDataSet.get(position).getStrMealThumb())
-               .apply(new RequestOptions()
-                       .override(200, 200)
-                       .placeholder(R.drawable.ic_launcher_foreground)
-                       .error(R.drawable.ic_launcher_foreground))
-               .into(viewHolder.img_meal);
+        Glide.with(_context)
+                .load(myDataSet.get(position).getStrMealThumb())
+                .apply(new RequestOptions()
+                        .override(200, 200)
+                        .placeholder(R.drawable.ic_launcher_foreground)
+                        .error(R.drawable.ic_launcher_foreground))
+                .into(viewHolder.img_meal);
 
 
-       //===========
+        //===========
         // Set up the child RecyclerView (for ingredients)
         List<String> ingredients = new ArrayList<>();
         List<String> measures = new ArrayList<>();
