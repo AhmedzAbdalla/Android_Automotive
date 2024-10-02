@@ -2,7 +2,11 @@ package com.example.foodplanner.DisplayMealDetails.Viewer;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
+import android.webkit.WebSettings;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -35,7 +39,7 @@ public class MealDetailsActivity extends AppCompatActivity implements MealDetail
     private TextView   txt_origin_country;
     private TextView   txt_steps;
     private TextView   txt_ingredients;
-    private VideoView  video_view;
+    private WebView video_view;
     private Button     btn_favorite;
     //SearchForMealsPresenterImpl mySearchForMealsImpl;
 
@@ -80,6 +84,11 @@ public class MealDetailsActivity extends AppCompatActivity implements MealDetail
         myDisplayMealDetailsPresenterImpl.getMealDetails(Integer.valueOf(mealName));
 
 
+        // Configure WebView settings
+        WebSettings webSettings = video_view.getSettings();
+        webSettings.setJavaScriptEnabled(true);  // Enable JavaScript for YouTube video playback
+        video_view.setWebViewClient(new WebViewClient());  // Ensure the video opens within the WebView
+
             ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
@@ -110,6 +119,22 @@ public class MealDetailsActivity extends AppCompatActivity implements MealDetail
                 .into(this.img_meal);
 
         //txt_ingredients.setText(l_list.get(0).get);
+
+
+        // Check if a YouTube video URL is provided and display it in WebView
+        if (l_list.get(0).getStrYoutube() != null && !l_list.get(0).getStrYoutube().isEmpty()) {
+            video_view.setVisibility(View.VISIBLE);
+
+            // Load the YouTube video
+            String videoUrl = l_list.get(0).getStrYoutube().replace("watch?v=", "embed/");
+            String iframe = "<iframe width=\"100%\" height=\"100%\" src=\"" + videoUrl + "\" frameborder=\"0\" allowfullscreen></iframe>";
+            video_view.loadData(iframe, "text/html", "utf-8");
+
+        } else {
+            video_view.setVisibility(View.GONE);
+            Log.i("Video", "displayRandomMeal: No Video Available");
+        }
+
 
         btn_favorite.setOnClickListener(new View.OnClickListener() {
             @Override
