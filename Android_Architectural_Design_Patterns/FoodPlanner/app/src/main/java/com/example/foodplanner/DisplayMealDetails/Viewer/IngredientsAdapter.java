@@ -1,16 +1,21 @@
 package com.example.foodplanner.DisplayMealDetails.Viewer;
 
+import static java.security.AccessController.getContext;
+
+import android.content.Context;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.example.foodplanner.NetworkUtils;
 import com.example.foodplanner.R;
 
 import java.util.ArrayList;
@@ -20,14 +25,17 @@ public class IngredientsAdapter extends RecyclerView.Adapter<IngredientsAdapter.
 
     List<String> ingredients;
     List<String> measures;
+    Context _context;
 
-    public IngredientsAdapter(List<String> ingredients) {
+    public IngredientsAdapter(Context _context,List<String> ingredients) {
+        this._context = _context;
         this.ingredients = new ArrayList<>();
         this.measures = new ArrayList<>();
     }
 
     public void setList(List<String> ingredients, List<String> measures) {
         //this.ingredients.clear();
+
         this.ingredients.addAll(ingredients);
         this.measures.addAll(measures);
         notifyDataSetChanged();
@@ -65,7 +73,16 @@ public class IngredientsAdapter extends RecyclerView.Adapter<IngredientsAdapter.
         String measure = measures.get(position);
         holder.txt_ingredient_name.setText(ingredient);
         holder.txt_ingredient_measure.setText(measure);
-        Glide.with(holder.itemView.getContext()).load("https://www.themealdb.com/images/ingredients/" + ingredient + ".png").into(holder.img_ingredient);
+
+        if (NetworkUtils.isInternetAvailable(_context.getApplicationContext())) {
+            // If internet is available, make network calls
+            Glide.with(holder.itemView.getContext()).load("https://www.themealdb.com/images/ingredients/" + ingredient + ".png").into(holder.img_ingredient);
+
+        } else {
+            // No internet connection, show a message to the user
+            Toast.makeText(_context.getApplicationContext(), "No internet connection available", Toast.LENGTH_SHORT).show();
+        }
+
 
 
 

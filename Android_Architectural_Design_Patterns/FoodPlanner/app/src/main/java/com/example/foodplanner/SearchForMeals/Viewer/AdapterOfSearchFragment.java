@@ -7,6 +7,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -112,6 +114,15 @@ public class AdapterOfSearchFragment extends RecyclerView.Adapter<AdapterOfSearc
     public int getItemCount() {
         //Log.i("TAG", "myDataSet.get(1).getStrMeal()");
         //Log.i("TAG", myDataSet.get(1).getStrMeal());
-        return myDataSet.size();
+        if(myDataSet!= null)
+        {
+            return myDataSet.size();
+        }
+        else
+        {
+            Toast.makeText(_context.getApplicationContext(), "No Result Found", Toast.LENGTH_SHORT).show();
+
+            return 0;
+        }
     }
 }

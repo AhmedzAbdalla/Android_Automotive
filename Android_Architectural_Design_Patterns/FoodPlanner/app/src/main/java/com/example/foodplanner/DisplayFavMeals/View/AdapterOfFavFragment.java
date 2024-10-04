@@ -6,9 +6,13 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.WebSettings;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.widget.VideoView;
 
 import androidx.annotation.NonNull;
@@ -18,6 +22,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.example.foodplanner.DisplayMealDetails.Viewer.IngredientsAdapter;
+import com.example.foodplanner.NetworkUtils;
 import com.example.foodplanner.R;
 import com.example.foodplanner.SearchForMeals.Viewer.OnItemClickListener;
 import com.example.foodplanner.model.POJO_class;
@@ -31,6 +36,7 @@ public class AdapterOfFavFragment extends RecyclerView.Adapter<AdapterOfFavFragm
     private Context _context;
     private List<POJO_class> myDataSet;
     if_DeleteFavProduct myif_DeleteFavProduct;
+    public static WebView video_view2;
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
         //private final TextView textView;
@@ -40,7 +46,7 @@ public class AdapterOfFavFragment extends RecyclerView.Adapter<AdapterOfFavFragm
         private TextView   txt_origin_country;
         private TextView   txt_steps;
         private TextView   txt_ingredients;
-        private VideoView video_view;
+
         private Button btn_favorite;
 
         private RecyclerView recyclerViewIngredients2;
@@ -52,7 +58,7 @@ public class AdapterOfFavFragment extends RecyclerView.Adapter<AdapterOfFavFragm
             txt_origin_country = view.findViewById(R.id.txt_origin_country);
             txt_steps = view.findViewById(R.id.txt_steps);
             //txt_ingredients = view.findViewById(R.id.txt_ingredients);
-            video_view = view.findViewById(R.id.video_view);
+            video_view2 = view.findViewById(R.id.video_view2);
             btn_favorite = view.findViewById(R.id.btn_delete);
 
             recyclerViewIngredients2 = view.findViewById(R.id.recyclerViewIngredients2);  // Child RecyclerView
@@ -91,17 +97,37 @@ public class AdapterOfFavFragment extends RecyclerView.Adapter<AdapterOfFavFragm
         viewHolder.txt_meal_name.setText(myDataSet.get(0).getStrMeal());
         viewHolder.txt_origin_country.setText(myDataSet.get(0).getStrArea());
         viewHolder.txt_steps.setText(myDataSet.get(0).getStrInstructions());
-        String temp = myDataSet.get(0).getStrIngredient1() + " " + myDataSet.get(0).getStrIngredient2();
-        temp += " " + myDataSet.get(0).getStrIngredient3() +" "+ myDataSet.get(0).getStrIngredient4();
+        if (NetworkUtils.isInternetAvailable(_context.getApplicationContext())) {
+            // If internet is available, make network calls
+            Glide.with(_context)
+                    .load(myDataSet.get(position).getStrMealThumb())
+                    .apply(new RequestOptions()
+                            .override(200, 200)
+                            .placeholder(R.drawable.ic_launcher_foreground)
+                            .error(R.drawable.ic_launcher_foreground))
+                    .into(viewHolder.img_meal);
+        } else {
+            // No internet connection, show a message to the user
+            Toast.makeText(_context.getApplicationContext(), "No internet connection available", Toast.LENGTH_SHORT).show();
+        }
+        // Configure WebView settings
+        WebSettings webSettings = video_view2.getSettings();
+        webSettings.setJavaScriptEnabled(true);  // Enable JavaScript for YouTube video playback
+        video_view2.setWebViewClient(new WebViewClient());
+        // Check if a YouTube video URL is provided and display it in WebView
+        if (myDataSet.get(0).getStrYoutube() != null && !myDataSet.get(0).getStrYoutube().isEmpty()) {
+            video_view2.setVisibility(View.VISIBLE);
 
-        //viewHolder.txt_ingredients.setText(temp);
-        Glide.with(_context)
-                .load(myDataSet.get(position).getStrMealThumb())
-                .apply(new RequestOptions()
-                        .override(200, 200)
-                        .placeholder(R.drawable.ic_launcher_foreground)
-                        .error(R.drawable.ic_launcher_foreground))
-                .into(viewHolder.img_meal);
+            // Load the YouTube video
+            String videoUrl = myDataSet.get(0).getStrYoutube().replace("watch?v=", "embed/");
+            String iframe = "<iframe width=\"100%\" height=\"100%\" src=\"" + videoUrl + "\" frameborder=\"0\" allowfullscreen></iframe>";
+            video_view2.loadData(iframe, "text/html", "utf-8");
+
+        } else {
+            video_view2.setVisibility(View.GONE);
+            Log.i("Video", "displayRandomMeal: No Video Available");
+        }
+
 
 
         //===========
@@ -112,7 +138,7 @@ public class AdapterOfFavFragment extends RecyclerView.Adapter<AdapterOfFavFragm
         measures = myDataSet.get(0).getMeasures();
 
         // Initialize the child adapter with the ingredients and measures
-        IngredientsAdapter ingredientsAdapter = new IngredientsAdapter(ingredients);
+        IngredientsAdapter ingredientsAdapter = new IngredientsAdapter(_context, ingredients);
         ingredientsAdapter.setList(ingredients, measures);
         // Set up the layout manager for the child RecyclerView
         LinearLayoutManager childLayoutManager = new LinearLayoutManager(

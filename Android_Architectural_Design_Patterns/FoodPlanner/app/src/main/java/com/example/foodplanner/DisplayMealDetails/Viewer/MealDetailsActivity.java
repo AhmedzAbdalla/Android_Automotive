@@ -94,7 +94,7 @@ public class MealDetailsActivity extends AppCompatActivity implements MealDetail
         recyclerViewIngredients.setLayoutManager(layoutManager);
 
 
-        adapter = new IngredientsAdapter(ingredients);
+        adapter = new IngredientsAdapter(this ,ingredients);
 
         recyclerViewIngredients.setAdapter(adapter);
         //==
@@ -107,11 +107,12 @@ public class MealDetailsActivity extends AppCompatActivity implements MealDetail
             String mealName = getIntent().getStringExtra("meal_ID");
             //txt_meal_name.setText(mealName);
             myDisplayMealDetailsPresenterImpl.getMealDetails(Integer.valueOf(mealName));
-
+            btn_CalenderAdd.setVisibility(View.VISIBLE);
 
         }
         else
         {
+            btn_CalenderAdd.setVisibility(View.INVISIBLE);
             List<POJO_class> temp = new ArrayList<>();
             temp.add(getIntent().getParcelableExtra("meal"));
             showMealDisplay(temp);
@@ -138,11 +139,6 @@ public class MealDetailsActivity extends AppCompatActivity implements MealDetail
         txt_meal_name.setText(l_list.get(0).getStrMeal());
         txt_origin_country.setText(l_list.get(0).getStrArea());
         txt_steps.setText(l_list.get(0).getStrInstructions());
-        String temp = l_list.get(0).getStrIngredient1() + " " + l_list.get(0).getStrIngredient2();
-        temp += " " + l_list.get(0).getStrIngredient3() +" "+ l_list.get(0).getStrIngredient4();
-
-        //txt_ingredients.setText(temp);
-
         Glide.with(this)
                 .load(l_list.get(0).getStrMealThumb())
                 .apply(new RequestOptions()

@@ -44,16 +44,19 @@ public class listingbycountryPresenterImpl implements listingbycountryPresenter,
     @Override
     public void onSuccessResult(List<POJO_class> myproducts, int flag) {
 
-        Log.i("TAG", "@@@@@@@@@@");
         //Log.i("TAG", myproducts.get(0).getStrArea());
-        if(flag == 1)
+        if(!myproducts.isEmpty())
         {
-            _view.displayMealsCountries(myproducts);
+            if(flag == 1)
+            {
+                _view.displayMealsCountries(myproducts);
+            }
+            else
+            {
+                _view2.displayCountryMeals(myproducts);
+            }
         }
-        else
-        {
-            _view2.displayCountryMeals(myproducts);
-        }
+
 
         //_view2.displayCountryMeals(myproducts);
     }
