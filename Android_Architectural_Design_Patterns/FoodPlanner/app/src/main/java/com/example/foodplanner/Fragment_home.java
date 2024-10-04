@@ -39,12 +39,13 @@ import com.example.foodplanner.model.Category_Pojo;
 import com.example.foodplanner.model.MealsRepositoryImpl;
 import com.example.foodplanner.model.POJO_class;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Fragment_home extends Fragment implements RandomMealView, OnRandomItemClickListener, listingbycategoryView, listingbycountryView,OnCategoryItemClickListener, OnCountryItemClickListener {
 
     RandomMealPresenterImpl myRandomMealPresenterImpl;
-    List<POJO_class> MyRandomeMeal;
+    List<POJO_class> MyRandomeMeal = new ArrayList<>();
 
     //========================== for listing by category
     RecyclerView myrecyclerViewcategorylist;
@@ -63,6 +64,7 @@ public class Fragment_home extends Fragment implements RandomMealView, OnRandomI
 
     TextView textBelowImage;
     ImageView imageView;
+
     //int [] imageResources;
 
     @SuppressLint("WrongViewCast")
@@ -95,7 +97,7 @@ public class Fragment_home extends Fragment implements RandomMealView, OnRandomI
         mylistingbycategoryPresenterImpl = new listingbycategoryPresenterImpl(this, MealsRepositoryImpl.getInstance(MealsRemoteDataSourceImpl.getInstance(getContext()), MealsLocalDataSourceImpl.getInstance(getContext())));
 
 
-       mylistingbycategoryPresenterImpl.getMealsCatgeories();
+       //mylistingbycategoryPresenterImpl.getMealsCatgeories();
         //==========================
 
         myrecyclerViewCountrylist = view.findViewById(R.id.recyclerViewCountry);
@@ -141,7 +143,14 @@ public class Fragment_home extends Fragment implements RandomMealView, OnRandomI
 
         mylistingbycountryPresenterImpl = new listingbycountryPresenterImpl(this, MealsRepositoryImpl.getInstance(MealsRemoteDataSourceImpl.getInstance(getContext()), MealsLocalDataSourceImpl.getInstance(getContext())));
 
-        mylistingbycountryPresenterImpl.getMealsCountries();
+        //if (NetworkUtils.isInternetAvailable(getContext())) {
+        //    mylistingbycountryPresenterImpl.getMealsCountries();
+        //} else {
+        //    Toast.makeText(getContext(), "Internet Failure", Toast.LENGTH_SHORT).show();
+//
+        //}
+
+
 
         //==========================
 
@@ -153,16 +162,43 @@ public class Fragment_home extends Fragment implements RandomMealView, OnRandomI
 
         myRandomMealPresenterImpl = new RandomMealPresenterImpl(this, MealsRepositoryImpl.getInstance(MealsRemoteDataSourceImpl.getInstance(getContext()), MealsLocalDataSourceImpl.getInstance(getContext())));
 
-        myRandomMealPresenterImpl.getRandomMeal();
+        Log.i("TAG", "vfdv: ");
+        // Check for internet connection before making any network requests
+        if (NetworkUtils.isInternetAvailable(getContext())) {
+            // If internet is available, make network calls
+            mylistingbycategoryPresenterImpl.getMealsCatgeories();
+            mylistingbycountryPresenterImpl.getMealsCountries();
+            myRandomMealPresenterImpl.getRandomMeal();
+            innerContainer.setVisibility(View.VISIBLE);
+        } else {
+            // No internet connection, show a message to the user
+            innerContainer.setVisibility(View.INVISIBLE);
+            Toast.makeText(getContext(), "No internet connection available", Toast.LENGTH_SHORT).show();
+        }
+       // myRandomMealPresenterImpl.getRandomMeal();
 
         // Set an onClickListener for the container
         innerContainer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 // Handle the click event here
-                onItemClick(MyRandomeMeal.get(0));
-                Toast.makeText(getContext(), "Container clicked", Toast.LENGTH_SHORT).show();
-            }
+
+                if (NetworkUtils.isInternetAvailable(getContext())) {
+                    if((!MyRandomeMeal.isEmpty()))
+                    {
+                        onItemClick(MyRandomeMeal.get(0));
+                    }
+                    else {
+                        //innerContainer.setVisibility(View.VISIBLE);
+                    }
+
+                    Toast.makeText(getContext(), "Container clicked", Toast.LENGTH_SHORT).show();
+
+                } else {
+                    // No internet connection, show a message to the user
+                    Toast.makeText(getContext(), "No internet connection available", Toast.LENGTH_SHORT).show();
+                }
+                }
         });
 
 
@@ -172,7 +208,7 @@ public class Fragment_home extends Fragment implements RandomMealView, OnRandomI
     @Override
     public void displayRandomMeal(List<POJO_class> l_list) {
 
-       Glide.with(this)
+       Glide.with(this.getActivity().getApplicationContext())
                .load(l_list.get(0).getStrMealThumb())
                .apply(new RequestOptions()
                        .override(200, 200)

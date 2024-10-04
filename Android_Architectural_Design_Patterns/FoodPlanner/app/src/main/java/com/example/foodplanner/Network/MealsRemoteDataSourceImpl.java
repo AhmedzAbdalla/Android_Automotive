@@ -46,7 +46,7 @@ public class MealsRemoteDataSourceImpl implements MealsRemoteDataSource {
         call.enqueue(new Callback<MealsResponse>() {
             @Override
             public void onResponse(Call<MealsResponse> call, Response<MealsResponse> response) {
-                if (response.isSuccessful() && response.body() != null) {
+                if (response.isSuccessful() && !(response.body().getMeals().isEmpty())) {
 
                     myNetworkCallback.onSuccessResult(response.body().getMeals(), 1);
                     Log.i("RetrofitClient", "here");
@@ -79,12 +79,6 @@ public class MealsRemoteDataSourceImpl implements MealsRemoteDataSource {
 
                     myNetworkCallback.onSuccessResult(response.body().getMeals(), 1);
 
-                    //for (POJO_class meal : meals) {
-                    //    Log.i("TAG", "ccccccccccccc");
-                    //    Log.i("Meal", "Meal Name: " + meal.getStrMeal());
-                    //    Log.i("Meal", "Meal Name: " + meal.getStrCategory());
-                    //    // Do something with the meal data
-                    //}
                 } else {
                     Log.e("API_ERROR", "Response unsuccessful or body is null");
                 }
@@ -107,17 +101,9 @@ public class MealsRemoteDataSourceImpl implements MealsRemoteDataSource {
             public void onResponse(Call<MealsResponse> call, retrofit2.Response<MealsResponse> response) {
                 if (response.isSuccessful() && response.body() != null) {
                     List<POJO_class> meals = response.body().getMeals();
-                    // Handle the meal data here
 
                     myNetworkCallback.onSuccessResult(response.body().getMeals() , l_flag);
 
-                    //for (POJO_class meal : meals) {
-                    Log.i("TAG", "%^%^$%^$%^");
-                        Log.i("TAG", response.body().getMeals().get(0).getStrMeal());
-                    //    Log.i("Meal", "Meal Name: " + meal.getStrMeal());
-                    //    Log.i("Meal", "Meal Name: " + meal.getStrCategory());
-                    //    // Do something with the meal data
-                    //}
                 } else {
                     Log.e("API_ERROR", "Response unsuccessful or body is null");
                 }

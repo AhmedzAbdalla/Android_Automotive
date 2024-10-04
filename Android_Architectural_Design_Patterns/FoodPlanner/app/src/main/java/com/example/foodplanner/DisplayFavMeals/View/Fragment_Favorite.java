@@ -77,6 +77,7 @@ public class Fragment_Favorite extends Fragment implements FavView, if_DeleteFav
                 }
             });
 
+
             return view ;//inflater.inflate(R.layout.fragment__favorite, container, false);
         }
 

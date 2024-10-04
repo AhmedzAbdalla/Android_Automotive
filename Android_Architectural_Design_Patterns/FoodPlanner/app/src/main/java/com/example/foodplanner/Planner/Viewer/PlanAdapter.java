@@ -1,4 +1,6 @@
 package com.example.foodplanner.Planner.Viewer;
+import static java.security.AccessController.getContext;
+
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.util.Log;
@@ -14,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
+import com.example.foodplanner.NetworkUtils;
 import com.example.foodplanner.R;
 import com.example.foodplanner.model.PlannedMeal;
 //import com.example.foodplanner.favourite.view.FavOnClickListener;
@@ -62,11 +65,19 @@ public class PlanAdapter extends RecyclerView.Adapter<PlanAdapter.PlanViewHolder
             // Display meal area (e.g., area of origin)
             holder.mealArea.setText(meal.getMeal().getStrArea());
 
-            // Load meal image using Glide
-            Glide.with(context)
-                    .load(meal.getMeal().getStrMealThumb())
-                    .apply(new RequestOptions().override(500, 500).placeholder(R.drawable.ic_launcher_foreground))
-                    .into(holder.mealImg);
+            if (NetworkUtils.isInternetAvailable(context.getApplicationContext())) {
+                // If internet is available, make network calls
+                // Load meal image using Glide
+                Glide.with(context)
+                        .load(meal.getMeal().getStrMealThumb())
+                        .apply(new RequestOptions().override(500, 500).placeholder(R.drawable.ic_launcher_foreground))
+                        .into(holder.mealImg);
+            } else {
+                // No internet connection, show a message to the user
+                Toast.makeText(context.getApplicationContext(), "No internet connection available", Toast.LENGTH_SHORT).show();
+            }
+
+
         }
 
 
@@ -85,14 +96,17 @@ public class PlanAdapter extends RecyclerView.Adapter<PlanAdapter.PlanViewHolder
             }
         });
 
+            holder.itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    onClick.onMealItemClicked(plannedMeals.get(position));
+                    Log.i(TAG, "#@#@@#");
+                }
+            });
+
+
         // Handle item click
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onClick.onMealItemClicked(plannedMeals.get(position));
-                Log.i(TAG, "#@#@@#");
-            }
-        });
+
     }
 
     @Override

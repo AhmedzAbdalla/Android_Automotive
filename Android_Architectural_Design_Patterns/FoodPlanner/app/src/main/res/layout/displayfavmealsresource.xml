@@ -69,8 +69,8 @@
             app:layout_constraintTop_toBottomOf="@id/recyclerViewIngredients2" />
 
         <!-- Video View (for embedded videos) -->
-        <VideoView
-            android:id="@+id/video_view"
+        <WebView
+            android:id="@+id/video_view2"
             android:layout_width="0dp"
             android:layout_height="200dp"
             android:layout_marginTop="8dp"
@@ -87,7 +87,7 @@
             android:layout_marginEnd="16dp"
             android:text="Remove"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/video_view" />
+            app:layout_constraintTop_toBottomOf="@id/video_view2" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -27,7 +27,11 @@ public class RandomMealPresenterImpl implements RandomMealPresenter, NetworkCall
 
     @Override
     public void onSuccessResult(List<POJO_class> myproducts, int l_flag) {
-        _view.displayRandomMeal(myproducts);
+       if(!myproducts.isEmpty())
+       {
+           _view.displayRandomMeal(myproducts);
+       }
+
     }
 
     @Override

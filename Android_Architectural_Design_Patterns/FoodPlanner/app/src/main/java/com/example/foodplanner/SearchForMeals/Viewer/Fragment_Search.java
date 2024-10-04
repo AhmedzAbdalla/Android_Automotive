@@ -21,6 +21,7 @@ import android.widget.Toast;
 import com.example.foodplanner.DB.MealsLocalDataSourceImpl;
 import com.example.foodplanner.DisplayMealDetails.Viewer.MealDetailsActivity;
 import com.example.foodplanner.Network.MealsRemoteDataSourceImpl;
+import com.example.foodplanner.NetworkUtils;
 import com.example.foodplanner.R;
 import com.example.foodplanner.SearchForMeals.Presenter.SearchForMealsPresenterImpl;
 import com.example.foodplanner.model.MealsRepositoryImpl;
@@ -85,7 +86,15 @@ public class Fragment_Search extends Fragment implements SearchFragmentView, OnI
             public void onClick(View view) {
                 //Arrabiata
 
-                performSearch();
+                // Check for internet connection before making any network requests
+                if (NetworkUtils.isInternetAvailable(getContext())) {
+                    // If internet is available, make network calls
+                    performSearch();
+                } else {
+                    // No internet connection, show a message to the user
+                    Toast.makeText(getContext(), "No internet connection available", Toast.LENGTH_SHORT).show();
+                }
+
                 //mySearchForMealsImpl.getProductsbyCountry(editSearchtxt.getText().toString()); //Canadian
                 //mySearchForMealsImpl.getProductsbyIngredient(editSearchtxt.getText().toString());
                 //mySearchForMealsImpl.getProductsbyCategory(editSearchtxt.getText().toString()); //Seafood
@@ -116,7 +125,7 @@ public class Fragment_Search extends Fragment implements SearchFragmentView, OnI
 
     @Override
     public void showProducts(List<POJO_class> l_list) {
-        Log.i("TAG", l_list.toString());
+        //Log.i("TAG", l_list.toString());
         myAdapterOfSearchFragment.setList(l_list);
         Log.i("TAG", "zzzz");
         myAdapterOfSearchFragment.notifyDataSetChanged();
@@ -131,6 +140,7 @@ public class Fragment_Search extends Fragment implements SearchFragmentView, OnI
 
         // Pass data (the meal name) to the new activity
         intent.putExtra("meal_ID", item.getIdMeal());
+        intent.putExtra("code", "ntest");
 
         // Start the new activity
         startActivity(intent);
