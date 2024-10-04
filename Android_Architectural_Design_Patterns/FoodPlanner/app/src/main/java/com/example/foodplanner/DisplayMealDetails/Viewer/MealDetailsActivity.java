@@ -1,6 +1,7 @@
 package com.example.foodplanner.DisplayMealDetails.Viewer;
 
 import android.annotation.SuppressLint;
+import android.app.Dialog;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -8,15 +9,19 @@ import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Button;
+import android.widget.CalendarView;
 import android.widget.ImageView;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
-import android.widget.VideoView;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+import androidx.lifecycle.Observer;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -26,13 +31,18 @@ import com.bumptech.glide.request.RequestOptions;
 import com.example.foodplanner.DB.MealsLocalDataSourceImpl;
 import com.example.foodplanner.DisplayMealDetails.Presenter.DisplayMealDetailsPresenterImpl;
 import com.example.foodplanner.Network.MealsRemoteDataSourceImpl;
+import com.example.foodplanner.Planner.Presenter.PlannerPresenterImpl;
 import com.example.foodplanner.R;
 import com.example.foodplanner.model.MealsRepositoryImpl;
 import com.example.foodplanner.model.POJO_class;
+import com.example.foodplanner.model.PlannedMeal;
 
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
-public class MealDetailsActivity extends AppCompatActivity implements MealDetailsView , if_AddFavProduct{
+public class MealDetailsActivity extends AppCompatActivity implements MealDetailsView , if_AddFavMeal, if_AddPlanMeal{
 
     private TextView   txt_meal_name;
     private ImageView  img_meal;
@@ -41,9 +51,15 @@ public class MealDetailsActivity extends AppCompatActivity implements MealDetail
     private TextView   txt_ingredients;
     private WebView video_view;
     private Button     btn_favorite;
+    private Button btn_CalenderAdd;
+    CalendarView calendarView;
+
+    Date date = new Date();
+    String mealType= "";
     //SearchForMealsPresenterImpl mySearchForMealsImpl;
 
     DisplayMealDetailsPresenterImpl myDisplayMealDetailsPresenterImpl;
+    PlannerPresenterImpl myPlannerPresenterImpl;
 
     private RecyclerView recyclerViewIngredients;
 
@@ -51,12 +67,15 @@ public class MealDetailsActivity extends AppCompatActivity implements MealDetail
     private List<String> ingredients;
     private List<String> measures;
 
-    @SuppressLint("MissingInflatedId")
+    @SuppressLint({"MissingInflatedId", "WrongViewCast"})
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_meal_details);
+
+        myPlannerPresenterImpl = new PlannerPresenterImpl(MealsRepositoryImpl.getInstance(MealsRemoteDataSourceImpl.getInstance(this), MealsLocalDataSourceImpl.getInstance(this)));
+
 
         txt_meal_name = findViewById(R.id.txt_meal_name);
         img_meal = findViewById(R.id.img_meal);
@@ -65,6 +84,8 @@ public class MealDetailsActivity extends AppCompatActivity implements MealDetail
         //txt_ingredients = findViewById(R.id.txt_ingredients);
         video_view = findViewById(R.id.video_view);
         btn_favorite = findViewById(R.id.btn_delete);
+        btn_CalenderAdd = findViewById(R.id.btn_CalenderAdd);
+        calendarView = findViewById(R.id.Plancalendar);
         //===
         recyclerViewIngredients = findViewById(R.id.recyclerViewIngredients);
         recyclerViewIngredients.setHasFixedSize(true);
@@ -79,10 +100,22 @@ public class MealDetailsActivity extends AppCompatActivity implements MealDetail
         //==
         myDisplayMealDetailsPresenterImpl = new DisplayMealDetailsPresenterImpl(this, MealsRepositoryImpl.getInstance(MealsRemoteDataSourceImpl.getInstance(this), MealsLocalDataSourceImpl.getInstance(this)));
 
-        String mealName = getIntent().getStringExtra("meal_ID");
-        //txt_meal_name.setText(mealName);
-        myDisplayMealDetailsPresenterImpl.getMealDetails(Integer.valueOf(mealName));
 
+        String code = getIntent().getStringExtra("code");
+        if(!(code.equals("test")))
+        {
+            String mealName = getIntent().getStringExtra("meal_ID");
+            //txt_meal_name.setText(mealName);
+            myDisplayMealDetailsPresenterImpl.getMealDetails(Integer.valueOf(mealName));
+
+
+        }
+        else
+        {
+            List<POJO_class> temp = new ArrayList<>();
+            temp.add(getIntent().getParcelableExtra("meal"));
+            showMealDisplay(temp);
+        }
 
         // Configure WebView settings
         WebSettings webSettings = video_view.getSettings();
@@ -143,10 +176,86 @@ public class MealDetailsActivity extends AppCompatActivity implements MealDetail
                 // holder.btnAddToFav.setBackgroundColor(0x03A9F4FF);
             }
         });
+
+        btn_CalenderAdd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showCalendarDialog(l_list);
+
+            }
+        });
     }
 
     @Override
     public void onFavAddclick(POJO_class favProduct) {
         myDisplayMealDetailsPresenterImpl.addToFav(favProduct);
     }
+
+    @Override
+    public void onPlanAddclick(POJO_class favProduct) {
+    }
+
+    private void showCalendarDialog(List<POJO_class> l_list) {
+        // Create a dialog
+        // Create a dialog
+        final Dialog dialog = new Dialog(this);
+        dialog.setContentView(R.layout.dialog_calendar);  // Updated layout for dialog
+        dialog.setTitle("Select a Date and Meal Type");
+
+        // Get views from the dialog layout
+        CalendarView calendarView = dialog.findViewById(R.id.calendarView);
+        RadioGroup radioGroupMealType = dialog.findViewById(R.id.radioGroupMealType);
+        Button btnSave = dialog.findViewById(R.id.btnSave);
+        // Set an onDateChangeListener to capture the selected date
+        calendarView.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
+            @Override
+            public void onSelectedDayChange(CalendarView view, int year, int month, int dayOfMonth) {
+                // Get the selected date
+                Calendar selectedCalendar = Calendar.getInstance();
+                selectedCalendar.set(year, month, dayOfMonth , 0,0,0);
+                selectedCalendar.set(Calendar.MILLISECOND,0);
+                selectedCalendar.set(Calendar.HOUR_OF_DAY, 0);
+                selectedCalendar.set(Calendar.MINUTE, 0);
+                selectedCalendar.set(Calendar.SECOND, 0);
+                selectedCalendar.set(Calendar.MILLISECOND, 0);
+
+                date = selectedCalendar.getTime();
+                Log.d("Save Date", "Date queried: " + date.toString());
+
+
+                String selectedDate = dayOfMonth + "/" + (month + 1) + "/" + year;
+                Toast.makeText(getBaseContext(), "Selected Date: " + date, Toast.LENGTH_SHORT).show();
+                //dialog.dismiss();  // Close the dialog when a date is selected
+            }
+        });
+
+        // Set up the save button
+        btnSave.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Get the selected meal type
+                int selectedMealId = radioGroupMealType.getCheckedRadioButtonId();
+                RadioButton selectedMealButton = dialog.findViewById(selectedMealId);
+                mealType = selectedMealButton != null ? selectedMealButton.getText().toString() : "Not Selected";
+
+                // Get the selected date
+                Calendar calendar = Calendar.getInstance();
+                calendar.set(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
+                Date selectedDate = calendar.getTime();
+
+
+                PlannedMeal m1 = new PlannedMeal(l_list.get(0),date,l_list.get(0).getIdMeal(),mealType);
+                myPlannerPresenterImpl.AddtoPlannedTable(m1,date);
+                // Dismiss the dialog after selecting the date
+                dialog.dismiss();
+            }
+        });
+
+
+
+
+        // Show the dialog
+        dialog.show();
+    }
+
 }

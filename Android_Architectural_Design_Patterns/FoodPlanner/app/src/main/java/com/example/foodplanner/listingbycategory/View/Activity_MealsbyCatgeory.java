@@ -93,6 +93,7 @@ public class Activity_MealsbyCatgeory extends AppCompatActivity implements Categ
 
         // Pass data (the meal name) to the new activity
         intent.putExtra("meal_ID", item.getIdMeal());
+        intent.putExtra("code", "ntest");
 
         // Start the new activity
         startActivity(intent);

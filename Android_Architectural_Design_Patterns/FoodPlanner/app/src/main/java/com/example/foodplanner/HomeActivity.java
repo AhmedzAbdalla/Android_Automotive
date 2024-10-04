@@ -12,13 +12,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
 import com.example.foodplanner.DisplayFavMeals.View.Fragment_Favorite;
-import com.example.foodplanner.Network.MealsRemoteDataSourceImpl;
-import com.example.foodplanner.Network.NetworkCallback;
+import com.example.foodplanner.Planner.Viewer.Fragment_Plan;
 import com.example.foodplanner.SearchForMeals.Viewer.Fragment_Search;
-import com.example.foodplanner.model.POJO_class;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-
-import java.util.List;
 
 public class HomeActivity extends AppCompatActivity {
     TextView CurrentFragmentName;
@@ -67,6 +63,11 @@ public class HomeActivity extends AppCompatActivity {
                     selectedFragment = new Fragment_Search();
                     CurrentFragmentName.setText("Favorites");
                     Log.i("TAG", "Favorites Selected");
+                }
+                else if (item.getItemId() == R.id.nav_plan) {
+                    selectedFragment = new Fragment_Plan();
+                    CurrentFragmentName.setText("My Plan");
+                    Log.i("TAG", "Plans Selected");
                 }
 
 

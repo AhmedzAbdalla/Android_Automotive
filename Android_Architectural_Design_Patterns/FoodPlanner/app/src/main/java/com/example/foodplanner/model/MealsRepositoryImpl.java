@@ -8,6 +8,7 @@ import com.example.foodplanner.DB.MealsLocalDataSourceImpl;
 import com.example.foodplanner.Network.NetworkCallback;
 import com.example.foodplanner.Network.MealsRemoteDataSourceImpl;
 
+import java.util.Date;
 import java.util.List;
 
 public class MealsRepositoryImpl implements  MealsRepository {
@@ -79,6 +80,27 @@ public class MealsRepositoryImpl implements  MealsRepository {
     @Override
     public void deleteProduct(POJO_class L_POPojoClass) {
         myMealsLocalDataSourceImpl.delete(L_POPojoClass);
+    }
+
+    @Override
+    public LiveData<List<PlannedMeal>> getMealForDay(Date day) {
+        return myMealsLocalDataSourceImpl.getMealForDay(day);
+    }
+
+    @Override
+    public LiveData<List<PlannedMeal>> getPlannedMeals() {
+        return myMealsLocalDataSourceImpl.getAllPlannedMeals();
+
+    }
+
+    @Override
+    public void insertPlannedMeal(PlannedMeal L_POPojoClass , Date date) {
+        myMealsLocalDataSourceImpl.insertMealToCalendar(L_POPojoClass,date);
+    }
+
+    @Override
+    public void deletePlannedMeal(PlannedMeal L_POPojoClass) {
+        myMealsLocalDataSourceImpl.deletePlannedMeal(L_POPojoClass);
     }
 
 }

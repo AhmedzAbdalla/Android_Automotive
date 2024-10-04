@@ -17,5 +17,10 @@
         android:icon="@drawable/baseline_search_24"
         app:showAsAction="ifRoom"
         android:title="Search" />
+    <item
+        android:id="@+id/nav_plan"
+        android:icon="@drawable/baseline_calendar_month_24"
+        app:showAsAction="ifRoom"
+        android:title="Plan" />
 
 </menu>

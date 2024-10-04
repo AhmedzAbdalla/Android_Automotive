@@ -1,5 +1,6 @@
 package com.example.foodplanner.DisplayFavMeals.View;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -86,7 +87,7 @@ public class AdapterOfFavFragment extends RecyclerView.Adapter<AdapterOfFavFragm
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder viewHolder, final int position) {
+    public void onBindViewHolder(ViewHolder viewHolder, @SuppressLint("RecyclerView") final int position) {
         viewHolder.txt_meal_name.setText(myDataSet.get(0).getStrMeal());
         viewHolder.txt_origin_country.setText(myDataSet.get(0).getStrArea());
         viewHolder.txt_steps.setText(myDataSet.get(0).getStrInstructions());
