@@ -60,15 +60,7 @@ public class Fragment_Favorite extends Fragment implements FavView, if_DeleteFav
             myAdapterOfFavFragment = new AdapterOfFavFragment(this.getContext(), this);
             myrecyclerView.setAdapter(myAdapterOfFavFragment);
 
-            //===
-
-            //==
-
             myFavoritePresenterImpl = new FavoritePresenterImpl(this, MealsRepositoryImpl.getInstance(MealsRemoteDataSourceImpl.getInstance(getContext()), MealsLocalDataSourceImpl.getInstance(getContext())));
-
-
-
-
             MyFavMeals = myFavoritePresenterImpl.getAllProducts();
 
 

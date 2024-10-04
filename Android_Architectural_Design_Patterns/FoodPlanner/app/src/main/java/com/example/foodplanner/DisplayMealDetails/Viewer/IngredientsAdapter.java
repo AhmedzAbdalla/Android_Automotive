@@ -67,6 +67,8 @@ public class IngredientsAdapter extends RecyclerView.Adapter<IngredientsAdapter.
         holder.txt_ingredient_measure.setText(measure);
         Glide.with(holder.itemView.getContext()).load("https://www.themealdb.com/images/ingredients/" + ingredient + ".png").into(holder.img_ingredient);
 
+
+
     }
 
     @Override

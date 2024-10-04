@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData;
 
 import com.example.foodplanner.Network.NetworkCallback;
 
+import java.util.Date;
 import java.util.List;
 
 public interface MealsRepository {
@@ -30,4 +31,14 @@ public interface MealsRepository {
     public void insertProduct(POJO_class L_POPojoClass);
 
     public void deleteProduct(POJO_class L_POPojoClass);
+
+    //=================================
+
+    LiveData<List<PlannedMeal>> getMealForDay(Date day);
+
+    public LiveData<List<PlannedMeal>> getPlannedMeals();
+
+    public void insertPlannedMeal(PlannedMeal L_POPojoClass , Date date);
+
+    public void deletePlannedMeal(PlannedMeal L_POPojoClass);
 }
