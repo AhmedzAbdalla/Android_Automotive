@@ -1,83 +1,120 @@
-<androidx.constraintlayout.widget.ConstraintLayout
+<ScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:layout_height="match_parent">
 
-    <!-- "Suggested" Title -->
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="173dp"
-        android:layout_height="48dp"
-        android:layout_marginStart="6dp"
-        android:layout_marginTop="5dp"
-        android:text="Suggested"
-        android:textSize="24sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <!-- Image and Text Container -->
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/container"
-        android:layout_width="390dp"
-        android:layout_height="128dp"
-        android:layout_marginTop="4dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.476"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/textView">
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
-        <ImageView
-            android:id="@+id/imageView"
-            android:layout_width="126dp"
-            android:layout_height="111dp"
-            android:layout_marginStart="22dp"
-            android:contentDescription="Sample image"
-            android:src="@drawable/ic_launcher_foreground"
-            app:layout_constraintStart_toEndOf="@+id/textBelowImage"
-            app:layout_constraintTop_toTopOf="parent" />
-
+        <!-- "Suggested" Title -->
         <TextView
-            android:id="@+id/textBelowImage"
-            android:layout_width="228dp"
-            android:layout_height="84dp"
-            android:text="Sample Text"
-            android:textSize="18sp"
-            app:layout_constraintStart_toStartOf="parent"
+            android:id="@+id/textView"
+            android:layout_width="173dp"
+            android:layout_height="48dp"
+            android:layout_marginStart="6dp"
+            android:layout_marginTop="5dp"
+            android:text="Suggested"
+            android:textSize="24sp"
+            app:layout_constraintStart_toStartOf="@+id/textView4"
             app:layout_constraintTop_toTopOf="parent" />
+
+        <!-- Image and Text Container -->
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/container"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/textView">
+
+            <!-- Smaller ImageView inside the container -->
+            <ImageView
+                android:id="@+id/imageView"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+                android:contentDescription="Sample image"
+                android:scaleType="fitCenter"
+                android:src="@drawable/ic_launcher_foreground"
+                app:layout_constraintDimensionRatio="1:1"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <TextView
+                android:id="@+id/textBelowImage"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="Sample Text"
+                android:textSize="16sp"
+            app:layout_constraintTop_toBottomOf="@id/imageView"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:gravity="center" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <!-- Categories Section -->
+        <TextView
+            android:id="@+id/textView4"
+            android:layout_width="wrap_content"
+            android:layout_height="48dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="224dp"
+            android:layout_marginBottom="11dp"
+            android:text="Meals Categories"
+            android:textSize="24sp"
+            app:layout_constraintBottom_toTopOf="@+id/recyclerViewCategories"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <!-- Categories RecyclerView -->
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerViewCategories"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginTop="16dp"
+            app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHeight_default="wrap"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/container"
+            app:layout_constraintVertical_bias="0.212"
+            app:spanCount="2" />
+
+        <!-- Country Section -->
+        <TextView
+            android:id="@+id/textView3"
+            android:layout_width="wrap_content"
+            android:layout_height="48dp"
+            android:layout_marginStart="4dp"
+            android:layout_marginTop="420dp"
+            android:text="Meals by countries"
+            android:textSize="24sp"
+            app:layout_constraintStart_toStartOf="@+id/textView4"
+        app:layout_constraintBottom_toTopOf="@+id/recyclerViewCountry"
+            />
+
+        <!-- Country RecyclerView -->
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerViewCountry"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginTop="300dp"
+            app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHeight_default="wrap"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/container"
+            app:spanCount="2" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <!-- Categories Section (RecyclerView) -->
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerViewCategories"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginTop="16dp"
-        app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHeight_default="wrap"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/container"
-        app:layout_constraintVertical_bias="0.002"
-        app:spanCount="2" /> <!-- Grid Layout with 2 columns -->
-
-    <!-- Categories Section (RecyclerView) -->
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerViewCountry"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginTop="212dp"
-        app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHeight_default="wrap"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/container"
-        app:spanCount="2" /> <!-- Grid Layout with 2 columns -->
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>

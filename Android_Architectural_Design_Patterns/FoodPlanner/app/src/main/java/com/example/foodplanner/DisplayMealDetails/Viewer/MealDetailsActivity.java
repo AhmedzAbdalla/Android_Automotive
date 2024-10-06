@@ -86,6 +86,16 @@ public class MealDetailsActivity extends AppCompatActivity implements MealDetail
         btn_favorite = findViewById(R.id.btn_delete);
         btn_CalenderAdd = findViewById(R.id.btn_CalenderAdd);
         calendarView = findViewById(R.id.Plancalendar);
+        Calendar calendar = Calendar.getInstance();
+
+        calendar.set(Calendar.MILLISECOND,0);
+        calendar.set(Calendar.HOUR_OF_DAY, 0);
+        calendar.set(Calendar.MINUTE, 0);
+        calendar.set(Calendar.SECOND, 0);
+        calendar.set(Calendar.MILLISECOND, 0);
+
+        long today = calendar.getTimeInMillis();
+        calendarView.setMinDate(today);
         //===
         recyclerViewIngredients = findViewById(R.id.recyclerViewIngredients);
         recyclerViewIngredients.setHasFixedSize(true);
@@ -214,6 +224,9 @@ public class MealDetailsActivity extends AppCompatActivity implements MealDetail
                 selectedCalendar.set(Calendar.MINUTE, 0);
                 selectedCalendar.set(Calendar.SECOND, 0);
                 selectedCalendar.set(Calendar.MILLISECOND, 0);
+
+                long today = selectedCalendar.getTimeInMillis();
+                calendarView.setMinDate(today);
 
                 date = selectedCalendar.getTime();
                 Log.d("Save Date", "Date queried: " + date.toString());
